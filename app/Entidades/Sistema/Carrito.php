@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Carrito extends Model
 {
-protected $table = 'carrito';
+protected $table = 'carritos';
       public $timestamps = false;
 
       protected $fillable = [

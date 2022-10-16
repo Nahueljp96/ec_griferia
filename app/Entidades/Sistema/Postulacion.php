@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Postulacion extends Model
 {
-protected $table = 'postulacion';
+protected $table = 'postulaciones';
       public $timestamps = false;
 
       protected $fillable = [
