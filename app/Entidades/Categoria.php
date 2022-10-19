@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Entidades\Sistema;
+namespace App\Entidades;
 
 use DB;
 use Illuminate\Database\Eloquent\Model;
@@ -31,5 +31,48 @@ protected $table = 'categorias';
           ]);
           return $this->idcategoria = DB::getPdo()->lastInsertId();
       }
+
+      public function guardar() {
+        $sql = "UPDATE $this->table SET
+            nombre='$this->nombre',
+         
+            WHERE idcategoria=?";
+        $affected = DB::update($sql, [$this->idcategoria]);
+    }
+    
+    public function eliminar()
+    {
+        $sql = "DELETE FROM $this->table WHERE idcategoria=?";         
+        $affected = DB::delete($sql, [$this->idcategoria]);
+    }
+
+    public function obtenerPorId($idcategoria)
+    {
+        $sql = "SELECT
+                idcategoria,
+                nombre
+                
+                FROM $this->table WHERE idcategoria =?";
+        $lstRetorno = DB::select($sql);
+
+        if (count($lstRetorno) > 0) {
+            $this->idcategoria = $lstRetorno[0]->idcliente;
+            $this->nombre = $lstRetorno[0]->nombre;
+            
+            return $this;
+        }
+        return null;
+    }
+
+    public function obtenerTodos()
+    {
+        $sql = "SELECT
+                idcategoria,
+                nombre
+               
+                FROM $this->table A ORDER BY nombre";
+        $lstRetorno = DB::select($sql);
+        return $lstRetorno;
+    }  
 }
 ?>

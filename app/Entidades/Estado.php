@@ -5,14 +5,15 @@ namespace App\Entidades;
 use DB;
 use Illuminate\Database\Eloquent\Model;
 
-class Sucursal extends Model
+class Estado extends Model
 {
-      protected $table = 'sucursales';
+protected $table = 'estados';
       public $timestamps = false;
 
       protected $fillable = [
-            'idsucursal',
+            'idestado',
             'nombre'
+           
       ];
       protected $hidden = [
 
@@ -23,12 +24,13 @@ class Sucursal extends Model
       {
           $sql = "INSERT INTO $this->table (
                   nombre
+                 
               ) VALUES (?);";
           $result = DB::insert($sql, [
               $this->nombre,
              
           ]);
-          return $this->idcliente = DB::getPdo()->lastInsertId();
+          return $this->idestado = DB::getPdo()->lastInsertId();
       }
 
       public function guardar() {
@@ -36,29 +38,33 @@ class Sucursal extends Model
             nombre='$this->nombre',
             
             
-            WHERE idsucursal=?";
-        $affected = DB::update($sql, [$this->idsucursal]);
+            WHERE idestado=?";
+        $affected = DB::update($sql, [$this->idestado]);
     }
     
     public function eliminar()
     {
-        $sql = "DELETE FROM $this->table WHERE idsucursal=?";         
-        $affected = DB::delete($sql, [$this->idsucursal]);
+        $sql = "DELETE FROM $this->table WHERE idestado=?";         
+        $affected = DB::delete($sql, [$this->idestado]);
     }
 
-    public function obtenerPorId($idsucursal)
+    public function obtenerPorId($idestado)
     {
         $sql = "SELECT
-                idsucursal,
+                idestado,
                 nombre
                
-                FROM $this->table WHERE idsucursal =?";
+                FROM $this->table WHERE idestado =?";
         $lstRetorno = DB::select($sql);
 
         if (count($lstRetorno) > 0) {
-            $this->idsucursal = $lstRetorno[0]->idsucursal;
+            $this->idcliente = $lstRetorno[0]->idcliente;
             $this->nombre = $lstRetorno[0]->nombre;
-           
+            $this->apellido = $lstRetorno[0]->apellido;
+            $this->correo = $lstRetorno[0]->correo;
+            $this->dni = $lstRetorno[0]->dni;
+            $this->celular = $lstRetorno[0]->celular;
+            $this->clave = $lstRetorno[0]->clave;
             return $this;
         }
         return null;
@@ -67,14 +73,12 @@ class Sucursal extends Model
     public function obtenerTodos()
     {
         $sql = "SELECT
-                idsucursal,
+                idestado,
                 nombre
+               
                 FROM $this->table A ORDER BY nombre";
         $lstRetorno = DB::select($sql);
         return $lstRetorno;
     }
-}
-
-
-
+}      
 ?>
