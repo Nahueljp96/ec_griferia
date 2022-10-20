@@ -91,13 +91,13 @@ protected $table = 'postulaciones';
     public function obtenerTodos()
     {
         $sql = "SELECT
-                idpostulacion
-                nombre,
-                apellido,
-                celular,
-                correo,
-                curriculum
-                FROM $this->table A ORDER BY nombre";
+                A.idpostulacion
+                A.nombre,
+                A.apellido,
+                A.celular,
+                A.correo,
+                A.curriculum
+                FROM $this->table A ORDER BY A.nombre DESC";
         $lstRetorno = DB::select($sql);
         return $lstRetorno;
     }

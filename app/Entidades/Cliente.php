@@ -92,14 +92,14 @@ protected $table = 'clientes';
     public function obtenerTodos()
     {
         $sql = "SELECT
-                idcliente,
-                nombre,
-                apellido,
-                correo,
-                dni,
-                celular,
-                clave
-                FROM $this->table A ORDER BY nombre";
+                A.idcliente,
+                A.nombre,
+                A.apellido,
+                A.correo,
+                A.dni,
+                A.celular,
+                A.clave
+                FROM $this->table A ORDER BY A.nombre";
         $lstRetorno = DB::select($sql);
         return $lstRetorno;
     }

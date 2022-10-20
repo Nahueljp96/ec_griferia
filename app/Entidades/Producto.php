@@ -16,7 +16,8 @@ protected $table = 'productos';
             'cantidad',
             'precio',
             'imagen',
-            'fk_idcategoria'
+            'fk_idcategoria',
+            'descripcion'
           
       ];
       protected $hidden = [
@@ -31,15 +32,17 @@ protected $table = 'productos';
                   cantidad,
                   precio,
                   imagen,
-                  fk_idcategoria
+                  fk_idcategoria,
+                  descripcion
                  
-              ) VALUES (?, ?, ?, ?, ?);";
+              ) VALUES (?, ?, ?, ?, ?, ?);";
           $result = DB::insert($sql, [
               $this->nombre,
               $this->cantidad,
               $this->precio,
               $this->imagen,
               $this->fk_idcategoria,
+              $this->descripcion
               
           ]);
           return $this->idproducto = DB::getPdo()->lastInsertId();
@@ -50,9 +53,9 @@ protected $table = 'productos';
             nombre='$this->nombre',
             cantidad=$this->cantidad,
             precio=$this->precio,
-            imagen='$this->imagen,'
+            imagen='$this->imagen',
             fk_idcategoria=$this->fk_idcategoria
-            
+            descripcion='$this->descripcion'
             WHERE idproducto=?";
         $affected = DB::update($sql, [$this->idproducto]);
     }
@@ -71,7 +74,8 @@ protected $table = 'productos';
                 cantidad,
                 precio,
                 imagen,
-                fk_idcategoria
+                fk_idcategoria,
+                descripcion
                 FROM $this->table WHERE idproducto =?";
         $lstRetorno = DB::select($sql);
 
@@ -81,6 +85,7 @@ protected $table = 'productos';
             $this->cantidad = $lstRetorno[0]->cantidad;
             $this->imagen = $lstRetorno[0]->imagen;
             $this->fk_idcategoria = $lstRetorno[0]->fk_idcategoria;
+            $this->descripcion =$lstRetorno[0]->descripcion;
           
             return $this;
         }
@@ -90,13 +95,14 @@ protected $table = 'productos';
     public function obtenerTodos()
     {
         $sql = "SELECT
-                idproducto
-                nombre,
-                cantidad,
-                precio,
-                imagen,
-                fk_idcategoria
-                FROM $this->table A ORDER BY nombre";
+                A.idproducto
+                A.nombre,
+                A.cantidad,
+                A.precio,
+                A.imagen,
+                A.fk_idcategoria,
+                A.descripcion,
+                FROM $this->table A ORDER BY A.nombre";
         $lstRetorno = DB::select($sql);
         return $lstRetorno;
     } 

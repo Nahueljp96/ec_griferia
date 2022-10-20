@@ -68,10 +68,10 @@ protected $table = 'carritos';
     public function obtenerTodos()
     {
         $sql = "SELECT
-                idcarrito,
-                fk_idcarrito
+                A.idcarrito,
+                A.fk_idcarrito
                
-                FROM $this->table A ORDER BY nombre";
+                FROM $this->table A ORDER BY A.nombre";
         $lstRetorno = DB::select($sql);
         return $lstRetorno;
     } 

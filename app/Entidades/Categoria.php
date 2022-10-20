@@ -67,10 +67,10 @@ protected $table = 'categorias';
     public function obtenerTodos()
     {
         $sql = "SELECT
-                idcategoria,
-                nombre
+                A.idcategoria,
+                A.nombre
                
-                FROM $this->table A ORDER BY nombre";
+                FROM $this->table A ORDER BY A.nombre";
         $lstRetorno = DB::select($sql);
         return $lstRetorno;
     }  

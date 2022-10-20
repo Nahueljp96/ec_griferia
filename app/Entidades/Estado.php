@@ -73,10 +73,10 @@ protected $table = 'estados';
     public function obtenerTodos()
     {
         $sql = "SELECT
-                idestado,
-                nombre
+                A.idestado,
+                A.nombre
                
-                FROM $this->table A ORDER BY nombre";
+                FROM $this->table A ORDER BY A.nombre";
         $lstRetorno = DB::select($sql);
         return $lstRetorno;
     }

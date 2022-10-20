@@ -28,13 +28,19 @@ protected $table = 'pedidos';
           $sql = "INSERT INTO $this->table (
                   fecha,
                   descripcion,
-                  total
+                  total,
+                  fk_idsucursal',
+                  fk_idcliente,
+                  fk_idestado
                   
-              ) VALUES (?, ?, ?);";
+              ) VALUES (?, ?, ?, ? ,? ,?);";
           $result = DB::insert($sql, [
               $this->fecha,
               $this->descripcion,
               $this->total,
+              $this->fk_idsucursal,
+              $this->fk_idcliente,
+              $this->fk_idestado
              
           ]);
           return $this->idpedido = DB::getPdo()->lastInsertId();
@@ -43,10 +49,12 @@ protected $table = 'pedidos';
       public function guardar() {
         $sql = "UPDATE $this->table SET
             fecha='$this->fecha',
-            descripcion=$this->descripcion,
+            descripcion='$this->descripcion',
             total=$this->total
+            fk_idsucursal=$this->fk_idsucursal,
+            fk_idcliente=$this->fk_idcliente,
+            fk_idestado=$this->fk_idestado
            
-            
             WHERE idpedido=?";
         $affected = DB::update($sql, [$this->idpedido]);
     }
@@ -86,14 +94,14 @@ protected $table = 'pedidos';
     public function obtenerTodos()
     {
         $sql = "SELECT
-                'idpedido',
-                'fecha',
-                'descripcion',
-                'total',
-                'fk_idsucursal',
-                'fk_idcliente',
-                'fk_idestado'
-                FROM $this->table A ORDER BY nombre";
+                A.idpedido,
+                A.fecha,
+                A.descripcion,
+                A.total,
+                A.fk_idsucursal,
+                A.fk_idcliente,
+                A.fk_idestado
+                FROM $this->table A ORDER BY A.nombre";
         $lstRetorno = DB::select($sql);
         return $lstRetorno;
     }

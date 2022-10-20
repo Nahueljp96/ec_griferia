@@ -12,7 +12,10 @@ class Sucursal extends Model
 
       protected $fillable = [
             'idsucursal',
-            'nombre'
+            'nombre',
+            'telefono',
+            'direccion',
+            'linkmapa',
       ];
       protected $hidden = [
 
@@ -22,10 +25,17 @@ class Sucursal extends Model
       public function insertar()
       {
           $sql = "INSERT INTO $this->table (
-                  nombre
-              ) VALUES (?);";
+                  nombre,
+                  telefono,
+                  direccion,
+                  linkmapa
+
+              ) VALUES (?, ?, ?, ?);";
           $result = DB::insert($sql, [
               $this->nombre,
+              $this->telefono,
+              $this->direccion,
+              $this->linkmapa
              
           ]);
           return $this->idcliente = DB::getPdo()->lastInsertId();
@@ -34,6 +44,9 @@ class Sucursal extends Model
       public function guardar() {
         $sql = "UPDATE $this->table SET
             nombre='$this->nombre',
+            telefono= '$this->telefono',
+            direccion= '$this->telefono',
+            linkmapa= '$this->linkmapa'
             
             
             WHERE idsucursal=?";
@@ -50,7 +63,10 @@ class Sucursal extends Model
     {
         $sql = "SELECT
                 idsucursal,
-                nombre
+                nombre,
+                telefono,
+                direccion,
+                linkmapa
                
                 FROM $this->table WHERE idsucursal =?";
         $lstRetorno = DB::select($sql);
@@ -58,6 +74,9 @@ class Sucursal extends Model
         if (count($lstRetorno) > 0) {
             $this->idsucursal = $lstRetorno[0]->idsucursal;
             $this->nombre = $lstRetorno[0]->nombre;
+            $this->telefono = $lstRetorno[0]->telefono;
+            $this->direccion = $lstRetorno[0]->direccion;
+            $this->linkmapa = $lstRetorno[0]->linkmapa;
            
             return $this;
         }
@@ -67,9 +86,12 @@ class Sucursal extends Model
     public function obtenerTodos()
     {
         $sql = "SELECT
-                idsucursal,
-                nombre
-                FROM $this->table A ORDER BY nombre";
+                A.idsucursal,
+                A.nombre,
+                A.telefono,
+                A.direccion,
+                A.linkmapa
+                FROM $this->table A ORDER BY A.nombre";
         $lstRetorno = DB::select($sql);
         return $lstRetorno;
     }
