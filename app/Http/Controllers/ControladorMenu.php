@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+
 use App\Entidades\Sistema\Menu; //include_once "app/Entidades/Sistema/Menu.php";
 use App\Entidades\Sistema\MenuArea;
 use App\Entidades\Sistema\Patente;
