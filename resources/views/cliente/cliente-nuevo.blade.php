@@ -2,7 +2,7 @@
 @section('titulo', "$titulo")
 @section('scripts')
 <script>
-    globalId = '<?php echo isset($cliente->idcliente) && $cliente->idcliente > 0 ? $cliente->ididclientemenu : 0; ?>';
+    globalId = '<?php echo isset($cliente->idcliente) && $cliente->idcliente > 0 ? $cliente->ididcliente : 0; ?>';
     <?php $globalId = isset($cliente->idcliente) ? $cliente->idcliente : "0";?>
 </script>
 @endsection
