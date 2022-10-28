@@ -9,7 +9,7 @@
 @section('breadcrumb')
 <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="/admin/home">Inicio</a></li>
-    <li class="breadcrumb-item"><a href="/admin/pedido">Estado</a></li>
+    <li class="breadcrumb-item"><a href="/admin/pedido">Pedidos</a></li>
     <li class="breadcrumb-item active">Modificar</li>
 </ol>
 <ol class="toolbar">
@@ -28,5 +28,56 @@ function fsalir(){
 </script>
 @endsection
 @section('contenido')
-      aca va el contenido
+<?php
+if (isset($msg)) {
+    echo '<div id = "msg"></div>';
+    echo '<script>msgShow("' . $msg["MSG"] . '", "' . $msg["ESTADO"] . '")</script>';
+}
+?>
+<div class="panel-body">
+        <div id = "msg"></div>
+        <?php
+if (isset($msg)) {
+    echo '<script>msgShow("' . $msg["MSG"] . '", "' . $msg["ESTADO"] . '")</script>';
+}
+?>
+
+      <form id="form1" method="POST">
+            <div class="row">
+                
+                  <input type="hidden" name="_token" value="{{ csrf_token() }}"></input> <!--Linea de seguridad !-->
+                  <input type="hidden" id="id" name="id" class="form-control" value="{{$globalId}}" required> <!--Almacena el Id en el caso de estar editando !-->
+                  <div class="form-group col-lg-6">
+                  <label>Fecha: *</label>
+                        <input type="date" id="txtFecha" name="txtFecha" class="form-control" value="" required>
+                  </div> 
+                 
+                <div class="form-group col-lg-6">
+                <label>Descripcion: *</label>
+                    <input type="text" id="txtDescripcion" name="txtDescripcion" class="form-control" value="" required>
+                </div> 
+                <div class="form-group col-lg-6">
+                <label>Cliente: *</label>
+                    <input type="text" id="txtCliente" name="txtCliente" class="form-control" value="" required>
+                </div> 
+                <div class="form-group col-lg-6">
+                <label>Estado: *</label>
+                    <select class="form-control" name="lsEstado" id="lsEstado">
+                        <option selected="" disiabled>Seleccionar</option>
+                    </select>
+                </div> 
+                <div class="form-group col-lg-6">
+                    <label>Sucursal: *</label>
+                    <select class="form-control" name="lsSucursal" id="lsSucursal">
+                            <option selected="" disabled>Seleccionar</option>
+                    </select>
+                </div> 
+                 
+                <div class="form-group col-lg-6">
+                <label>Total: *</label>
+                    <input type="number" id="txtTotal" name="txtTotal" class="form-control" value="" required>
+                </div> 
+            
+            </div>
+      </form>           
 @endsection

@@ -9,7 +9,7 @@
 @section('breadcrumb')
 <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="/admin/home">Inicio</a></li>
-    <li class="breadcrumb-item"><a href="/admin/clientes">Productos</a></li>
+    <li class="breadcrumb-item"><a href="/admin/productos">Productos</a></li>
     <li class="breadcrumb-item active">Modificar</li>
 </ol>
 <ol class="toolbar">
@@ -28,5 +28,45 @@ function fsalir(){
 </script>
 @endsection
 @section('contenido')
-      aca va el contenido
+<?php
+if (isset($msg)) {
+    echo '<div id = "msg"></div>';
+    echo '<script>msgShow("' . $msg["MSG"] . '", "' . $msg["ESTADO"] . '")</script>';
+}
+?>
+<div class="panel-body">
+        <div id = "msg"></div>
+        <?php
+if (isset($msg)) {
+    echo '<script>msgShow("' . $msg["MSG"] . '", "' . $msg["ESTADO"] . '")</script>';
+}
+?>
+
+      <form id="form1" method="POST">
+            <div class="row">
+                
+                  <input type="hidden" name="_token" value="{{ csrf_token() }}"></input> <!--Linea de seguridad !-->
+                  <input type="hidden" id="id" name="id" class="form-control" value="{{$globalId}}" required> <!--Almacena el Id en el caso de estar editando !-->
+                  <div class="form-group col-lg-6">
+                  <label>Nombre: *</label>
+                        <input type="text" id="txtNombre" name="txtNombre" class="form-control" value="" required>
+                  </div> 
+                 
+                <div class="form-group col-lg-6">
+                <label>Cantidad: *</label>
+                    <input type="number" id="txtCantidad" name="txtCantidad" class="form-control" value="" required>
+                </div> 
+                 
+                <div class="form-group col-lg-6">
+                <label>Precio: *</label>
+                    <input type="number" id="txtPrecio" name="txtPrecio" class="form-control" value="" required>
+                </div> 
+            
+                <div class="col-3">
+                    <label>Imagen: *</label>
+                    <input type="file" id="txtImagen" name="txtImagen" class="" value="">
+                </div> 
+                
+            </div>
+      </form>           
 @endsection
