@@ -32,6 +32,7 @@ class ControladorPedido extends Controller
     }
 
     public function guardar(Request $request) {
+        
         try {
             //Define la entidad servicio
             $titulo = "Modificar Pedido";
@@ -41,7 +42,7 @@ class ControladorPedido extends Controller
            //print_r($_REQUEST);
            //exit;
             //validaciones
-            if ($entidad->fk_idcliente == "" || $entidad->fecha == "") {
+            if ($entidad->fk_idcliente == "" || $entidad->fecha == "" || $entidad->estado == "" || $entidad->total == "") {
                 $msg["ESTADO"] = MSG_ERROR;
                 $msg["MSG"] = "Complete todos los datos";
             } else {
