@@ -38,7 +38,7 @@ class Sucursal extends Model
               $this->linkmapa
              
           ]);
-          return $this->idcliente = DB::getPdo()->lastInsertId();
+          return $this->idsucursal = DB::getPdo()->lastInsertId();
       }
 
       public function guardar() {
@@ -68,7 +68,7 @@ class Sucursal extends Model
                 direccion,
                 linkmapa
                
-                FROM $this->table WHERE idsucursal =?";
+                FROM $this->table WHERE idsucursal = $idsucursal";
         $lstRetorno = DB::select($sql);
 
         if (count($lstRetorno) > 0) {

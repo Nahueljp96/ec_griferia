@@ -22,6 +22,15 @@ protected $table = 'pedidos';
 
       ];
 
+      public function cargarDesdeRequest($request) {
+        $this->idpedido = $request->input('id') != "0" ? $request->input('id') : $this->idpedido;
+        $this->fecha = $request->input('txtFecha');
+        $this->descripcion = $request->input('txtDescripcion');
+        $this->total = $request->input('txtTotal');
+        $this->fk_idsucursal = $request->input('lstSucursal');
+        $this->fk_idcliente = $request->input('lstCliente');
+        $this->fk_idestado = $request->input('lstEstado');
+      }
 
       public function insertar()
       {
@@ -29,7 +38,7 @@ protected $table = 'pedidos';
                   fecha,
                   descripcion,
                   total,
-                  fk_idsucursal',
+                  fk_idsucursal,
                   fk_idcliente,
                   fk_idestado
                   
@@ -50,7 +59,7 @@ protected $table = 'pedidos';
         $sql = "UPDATE $this->table SET
             fecha='$this->fecha',
             descripcion='$this->descripcion',
-            total=$this->total
+            total=$this->total,
             fk_idsucursal=$this->fk_idsucursal,
             fk_idcliente=$this->fk_idcliente,
             fk_idestado=$this->fk_idestado
@@ -68,14 +77,14 @@ protected $table = 'pedidos';
     public function obtenerPorId($idpedido)
     {
         $sql = "SELECT
-                'idpedido',
-                'fecha',
-                'descripcion',
-                'total',
-                'fk_idsucursal',
-                'fk_idcliente',
-                'fk_idestado'
-                FROM $this->table WHERE idpedido =?";
+                idpedido,
+                fecha,
+                descripcion,
+                total,
+                fk_idsucursal,
+                fk_idcliente,
+                fk_idestado
+                FROM $this->table WHERE idpedido = $idpedido";
         $lstRetorno = DB::select($sql);
 
         if (count($lstRetorno) > 0) {

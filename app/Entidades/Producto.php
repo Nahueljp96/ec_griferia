@@ -24,6 +24,15 @@ protected $table = 'productos';
 
       ];
 
+      public function cargarDesdeRequest($request) {
+        $this->idproducto = $request->input('id') != "0" ? $request->input('id') : $this->idproducto;
+        $this->nombre = $request->input('txtNombre');
+        $this->cantidad = $request->input('txtCantidad');
+        $this->precio = $request->input('txtPrecio');
+        $this->imagen = $request->input('imagen');
+        $this->fk_idcategoria = $request->input('lsCategoria');
+        $this->descripcion = $request->input('txtDescripcion');
+      }
 
       public function insertar()
       {
@@ -76,7 +85,7 @@ protected $table = 'productos';
                 imagen,
                 fk_idcategoria,
                 descripcion
-                FROM $this->table WHERE idproducto =?";
+                FROM $this->table WHERE idproducto = $idproducto";
         $lstRetorno = DB::select($sql);
 
         if (count($lstRetorno) > 0) {

@@ -23,7 +23,16 @@ protected $table = 'clientes';
 
       ];
 
-
+      public function cargarDesdeRequest($request) {
+        $this->idcliente = $request->input('id') != "0" ? $request->input('id') : $this->idcliente;
+        $this->nombre = $request->input('txtNombre');
+        $this->apellido = $request->input('txtApellido');
+        $this->correo = $request->input('txtCorreo');
+        $this->dni = $request->input('txtDni');
+        $this->celular = $request->input('txtCelular');
+        $this->clave = $request->input('txtClave');
+      }
+      
       public function insertar()
       {
           $sql = "INSERT INTO $this->table (
@@ -48,9 +57,9 @@ protected $table = 'clientes';
       public function guardar() {
         $sql = "UPDATE $this->table SET
             nombre='$this->nombre',
-            apellido=$this->apellido,
-            correo=$this->correo,
-            dni=$this->dni,
+            apellido='$this->apellido',
+            correo='$this->correo',
+            dni='$this->dni',
             celular='$this->celular'
             
             WHERE idcliente=?";
@@ -103,6 +112,8 @@ protected $table = 'clientes';
         $lstRetorno = DB::select($sql);
         return $lstRetorno;
     }
+
+
 }
 
 

@@ -54,22 +54,36 @@ if (isset($msg)) {
                  
                 <div class="form-group col-lg-6">
                 <label>Descripcion: *</label>
-                    <input type="text" id="txtDescripcion" name="txtDescripcion" class="form-control" value="" required>
+                    <input type="text" id="txtDescripcion" name="txtDescripcion" class="form-control" value="">
                 </div> 
                 <div class="form-group col-lg-6">
-                <label>Cliente: *</label>
-                    <input type="text" id="txtCliente" name="txtCliente" class="form-control" value="" required>
+                    <label>Cliente: *</label>
+                    <select class="form-control" name="lstCliente" id="lstCliente">
+                            <option selected="" disabled>Seleccionar</option>
+                            @foreach($aClientes as $item)
+                                <option value="{{ $item->idcliente}}">{{ $item->nombre}} {{ $item->apellido}}</option>
+                                
+                            @endforeach
+                    </select>
                 </div> 
                 <div class="form-group col-lg-6">
                 <label>Estado: *</label>
-                    <select class="form-control" name="lsEstado" id="lsEstado">
+                    <select class="form-control" name="lstEstado" id="lstEstado">
                         <option selected="" disiabled>Seleccionar</option>
+                        @foreach($aEstados as $item)
+                            <option value="{{ $item->idestado}}">{{ $item->nombre}}</option>
+                                
+                        @endforeach
                     </select>
                 </div> 
                 <div class="form-group col-lg-6">
                     <label>Sucursal: *</label>
-                    <select class="form-control" name="lsSucursal" id="lsSucursal">
-                            <option selected="" disabled>Seleccionar</option>
+                    <select class="form-control" name="lstSucursal" id="lstSucursal">
+                        <option disabled selected>Seleccionar</option>
+                            @foreach($aSucursales as $item)
+                                <option value="{{ $item->idsucursal}}">{{ $item->nombre}}</option>
+
+                            @endforeach
                     </select>
                 </div> 
                  
@@ -78,6 +92,60 @@ if (isset($msg)) {
                     <input type="number" id="txtTotal" name="txtTotal" class="form-control" value="" required>
                 </div> 
             
-            </div>
-      </form>           
+            </div>        
+      </form> 
+    </div>  
+<div class="modal fade" id="mdlEliminar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Eliminar registro?</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">¿Deseas eliminar el registro actual?</div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">No</button>
+            <button type="button" class="btn btn-primary" onclick="eliminar();">Sí</button>
+          </div>
+        </div>
+      </div>
+    </div>
+<script>
+
+    $("#form1").validate();
+
+    function guardar() {
+        if ($("#form1").valid()) {
+            modificado = false;
+            form1.submit();
+        } else {
+            $("#modalGuardar").modal('toggle');
+            msgShow("Corrija los errores e intente nuevamente.", "danger");
+            return false;
+        }
+    }
+
+    function eliminar() {
+        $.ajax({
+            type: "GET",
+            url: "{{ asset('admin/pedido/eliminar') }}",
+            data: { id:globalId },
+            async: true,
+            dataType: "json",
+            success: function (data) {
+                if (data.err = "0") {
+                    msgShow("Registro eliminado exitosamente.", "success");
+                    $("#btnEnviar").hide();
+                    $("#btnEliminar").hide();
+                    $('#mdlEliminar').modal('toggle');
+                } else {
+                    msgShow("Error al eliminar", "success");
+                }
+            }
+        });
+    }
+
+</script>                
 @endsection

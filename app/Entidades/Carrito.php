@@ -12,12 +12,22 @@ protected $table = 'carritos';
 
       protected $fillable = [
             'idcarrito',
-            'fk_idcliente'
+            'fk_idcarrito'
           
       ];
       protected $hidden = [
 
       ];
+
+      public function cargarDesdeRequest($request) {
+        $this->idcarrito = $request->input('id') != "0" ? $request->input('id') : $this->idcarrito;
+        $this->fk_idcarrito = $request->input('lstCarrito');
+        $this->apellido = $request->input('txtApellido');
+        $this->correo = $request->input('txtCorreo');
+        $this->dni = $request->input('txtDni');
+        $this->celular = $request->input('txtCelular');
+        $this->clave = $request->input('txtClave');
+      }
 
 
       public function insertar()
@@ -53,7 +63,7 @@ protected $table = 'carritos';
         $sql = "SELECT
                 idcarrito,
                 fk_idcliente
-                FROM $this->table WHERE idcarrito =?";
+                FROM $this->table WHERE idcarrito = $idcarrito";
         $lstRetorno = DB::select($sql);
 
         if (count($lstRetorno) > 0) {

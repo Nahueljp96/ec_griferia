@@ -54,17 +54,13 @@ protected $table = 'estados';
                 idestado,
                 nombre
                
-                FROM $this->table WHERE idestado =?";
+                FROM $this->table WHERE idestado = $idestado";
         $lstRetorno = DB::select($sql);
 
         if (count($lstRetorno) > 0) {
-            $this->idcliente = $lstRetorno[0]->idcliente;
+            $this->idestado = $lstRetorno[0]->idestado;
             $this->nombre = $lstRetorno[0]->nombre;
-            $this->apellido = $lstRetorno[0]->apellido;
-            $this->correo = $lstRetorno[0]->correo;
-            $this->dni = $lstRetorno[0]->dni;
-            $this->celular = $lstRetorno[0]->celular;
-            $this->clave = $lstRetorno[0]->clave;
+           
             return $this;
         }
         return null;

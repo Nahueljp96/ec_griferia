@@ -72,7 +72,7 @@ protected $table = 'postulaciones';
                 celular,
                 correo,
                 curriculum
-                FROM $this->table WHERE idpostulacion =?";
+                FROM $this->table WHERE idpostulacion = $idpostulacion";
         $lstRetorno = DB::select($sql);
 
         if (count($lstRetorno) > 0) {
