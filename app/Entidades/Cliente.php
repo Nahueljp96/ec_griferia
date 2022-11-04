@@ -82,7 +82,7 @@ protected $table = 'clientes';
                 dni,
                 celular,
                 clave
-                FROM $this->table WHERE idcliente =?";
+                FROM $this->table WHERE idcliente = $idcliente";
         $lstRetorno = DB::select($sql);
 
         if (count($lstRetorno) > 0) {
@@ -110,6 +110,43 @@ protected $table = 'clientes';
                 A.clave
                 FROM $this->table A ORDER BY A.nombre";
         $lstRetorno = DB::select($sql);
+        return $lstRetorno;
+    }
+
+    public function obtenerFiltrado()
+    {
+        $request = $_REQUEST;
+        $columns = array(  //orden de las columnas 
+            0 => 'A.idcliente',
+            1 => 'A.nombre',
+            2 => 'A.dni',
+            3 => 'A.correo',
+            4 => 'A.celular',
+        );
+        $sql = "SELECT DISTINCT  #El A. hace que le agregue un alias, es decir A referencia a la tabla clientes
+                    A.idcliente,  
+                    A.nombre,
+                    A.apellido,
+                    A.correo,
+                    A.dni,
+                    A.celular,
+                    A.clave
+                    FROM clientes A
+                WHERE 1=1
+                ";
+
+        //Realiza el filtrado, tiene los valores de configuración de busqueda.
+        if (!empty($request['search']['value'])) {
+            $sql .= " AND ( A.nombre LIKE '%" . $request['search']['value'] . "%' ";
+            $sql .= " OR B.apellido LIKE '%" . $request['search']['value'] . "%' ";
+            $sql .= " OR B.documento LIKE '%" . $request['search']['value'] . "%' ";
+            $sql .= " OR B.correo LIKE '%" . $request['search']['value'] . "%' ";
+            $sql .= " OR A.celular LIKE '%" . $request['search']['value'] . "%' )";
+        }
+        $sql .= " ORDER BY " . $columns[$request['order'][0]['column']] . "   " . $request['order'][0]['dir']; //forma de ordenarlo
+
+        $lstRetorno = DB::select($sql);
+
         return $lstRetorno;
     }
 
