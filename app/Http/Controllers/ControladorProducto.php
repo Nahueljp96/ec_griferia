@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 
 use App\Entidades\Producto; 
+use App\Entidades\Categoria; 
 use App\Entidades\Sistema\Patente;
 use App\Entidades\Sistema\Usuario;
 use Illuminate\Http\Request;
@@ -15,7 +16,11 @@ class ControladorProducto extends Controller
     public function nuevo()
     {
         $titulo = "Nuevo producto";
-        return view( 'producto.producto-nuevo', compact ('titulo'));
+
+        $categoria = new Categoria();
+        $aCategorias = $categoria->obtenerTodos();
+
+        return view( 'producto.producto-nuevo', compact ('titulo') , compact ('aCategorias'));
     }
 
     public function index()
@@ -32,6 +37,42 @@ class ControladorProducto extends Controller
         } else {
             return redirect('admin/login');
         }
+    }
+
+    public function cargarGrilla()
+    {
+        $request = $_REQUEST;
+
+        $entidad = new Producto();
+        $aProductos = $entidad->obtenerFiltrado();
+
+        $data = array(); #variables de configuración 
+        $cont = 0;
+
+        $inicio = $request['start'];
+        $registros_por_pagina = $request['length'];
+
+
+        for ($i = $inicio; $i < count($aProductos) && $cont < $registros_por_pagina; $i++) {
+            $row = array();
+            $row[] = "<a href='/admin/producto/" .$aProductos[$i]->idproducto. "' class='btn btn-secondary'><i class='fa-solid fa-pencil'></i></a>";
+            $row[] = $aProductos[$i]->nombre;
+            $row[] = $aProductos[$i]->cantidad;
+            $row[] = "$". number_format ($aProductos[$i]->precio, 2, ",", "."); 
+            $row[] = $aProductos[$i]->imagen;
+            $row[] = $aProductos[$i]->categoria;
+            $row[] = $aProductos[$i]->descripcion;
+            $cont++;
+            $data[] = $row;
+        }
+
+        $json_data = array(
+            "draw" => intval($request['draw']),
+            "recordsTotal" => count($aProductos), //cantidad total de registros sin paginar
+            "recordsFiltered" => count($aProductos), //cantidad total de registros en la paginacion
+            "data" => $data,
+        );
+        return json_encode($json_data);
     }
 
     public function guardar(Request $request) {

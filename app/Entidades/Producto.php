@@ -30,7 +30,7 @@ protected $table = 'productos';
         $this->cantidad = $request->input('txtCantidad');
         $this->precio = $request->input('txtPrecio');
         $this->imagen = $request->input('imagen');
-        $this->fk_idcategoria = $request->input('lsCategoria');
+        $this->fk_idcategoria = $request->input('lstCategoria');
         $this->descripcion = $request->input('txtDescripcion');
       }
 
@@ -55,7 +55,7 @@ protected $table = 'productos';
               
           ]);
           return $this->idproducto = DB::getPdo()->lastInsertId();
-      }
+        }
 
       public function guardar() {
         $sql = "UPDATE $this->table SET
@@ -110,10 +110,53 @@ protected $table = 'productos';
                 A.precio,
                 A.imagen,
                 A.fk_idcategoria,
-                A.descripcion,
+                A.descripcion
                 FROM $this->table A ORDER BY A.nombre";
         $lstRetorno = DB::select($sql);
         return $lstRetorno;
-    } 
+    }
+    
+    public function obtenerFiltrado()
+    {
+        $request = $_REQUEST;
+        $columns = array(  //orden de las columnas 
+            0 => 'A.idproducto',
+            1 => 'A.nombre',
+            2 => 'A.cantidad',
+            3 => 'A.precio',
+            4 => 'A.imagen',
+            5 => 'A.fk_idcategoria',
+            6 => 'A.descripcion',
+            
+        );                             
+        #El A. hace que le agregue un alias, es decir A referencia a la tabla productos
+        $sql = "SELECT DISTINCT  
+                    A.idproducto,
+                    A.nombre,
+                    A.cantidad,
+                    A.precio,
+                    A.imagen,
+                    A.fk_idcategoria,
+                    B.nombre AS categoria,
+                    A.descripcion
+                    FROM productos A
+                    INNER JOIN categorias B ON A.fk_idcategoria = B.idcategoria
+                WHERE 1=1
+                ";
+
+        //Realiza el filtrado, tiene los valores de configuración de busqueda.
+        if (!empty($request['search']['value'])) {
+            $sql .= " AND ( A.nombre LIKE '%" . $request['search']['value'] . "%' ";
+            $sql .= " OR A.cantidad LIKE '%" . $request['search']['value'] . "%' ";
+            $sql .= " OR A.precio LIKE '%" . $request['search']['value'] . "%' ";
+            $sql .= " OR A.fk_idcategoria LIKE '%" . $request['search']['value'] . "%')";
+           
+        }
+        $sql .= " ORDER BY " . $columns[$request['order'][0]['column']] . "   " . $request['order'][0]['dir']; //forma de ordenarlo
+
+        $lstRetorno = DB::select($sql);
+
+        return $lstRetorno;
+    }
 }      
 ?>

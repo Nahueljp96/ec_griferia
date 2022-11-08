@@ -69,8 +69,11 @@ if (isset($msg)) {
                 </div> 
                 <div class="form-group col-lg-6">
                     <label>Categoria: *</label>
-                    <select name="lsCategoria" id="lsCategoria" class="form-control">
+                    <select name="lstCategoria" id="lstCategoria" class="form-control">
                         <option value=""disiable>Seleccionar</option>
+                        @foreach ($aCategorias as $i)
+                        <option value="{{ $i->idcategoria}}">{{ $i->nombre}}</option>
+                        @endforeach
                     </select>    
                 </div>
                 
