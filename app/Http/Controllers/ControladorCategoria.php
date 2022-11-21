@@ -15,7 +15,8 @@ class ControladorCategoria extends Controller
     public function nuevo()
     {
         $titulo = "Nueva Categoria";
-        return view( 'categoria.categoria-nuevo', compact ('titulo'));
+        $categoria = new Categoria();
+        return view( 'categoria.categoria-nuevo', compact ('titulo','categoria'));
     }
 
     public function index()
@@ -32,6 +33,37 @@ class ControladorCategoria extends Controller
         } else {
             return redirect('admin/login');
         }
+    }
+
+    public function cargarGrilla()
+    {
+        $request = $_REQUEST;
+
+        $entidad = new Categoria();
+        $aCategorias = $entidad->obtenerFiltrado();
+
+        $data = array(); #variables de configuración 
+        $cont = 0;
+
+        $inicio = $request['start'];
+        $registros_por_pagina = $request['length'];
+
+
+        for ($i = $inicio; $i < count($aCategorias) && $cont < $registros_por_pagina; $i++) {
+            $row = array();
+            $row[] = "<a href='/admin/categoria/" .$aCategorias[$i]->idcategoria. "' class='btn btn-secondary'><i class='fa-solid fa-pencil'></i></a>";
+            $row[] = $aCategorias[$i]->nombre;
+            $cont++;
+            $data[] = $row;
+        }
+
+        $json_data = array(
+            "draw" => intval($request['draw']),
+            "recordsTotal" => count($aCategorias), //cantidad total de registros sin paginar
+            "recordsFiltered" => count($aCategorias), //cantidad total de registros en la paginacion
+            "data" => $data,
+        );
+        return json_encode($json_data);
     }
 
     public function guardar(Request $request) {
@@ -80,6 +112,50 @@ class ControladorCategoria extends Controller
 
         return view('categoria.categoria-nuevo', compact('msg', 'titulo')) . '?id=' . $categoria->idcategoria;
 
+    }
+
+    public function editar($id)
+    {
+        $titulo = "Modificar Categoria";
+        //pregunta si el usuario esta autentificado
+        if (Usuario::autenticado() == true) {
+            if (!Patente::autorizarOperacion("MENUMODIFICACION")) {
+                $codigo = "CATEGORIAMODIFICACION";
+                $mensaje = "No tiene pemisos para la operaci&oacute;n.";
+                return view('sistema.pagina-error', compact('titulo', 'codigo', 'mensaje'));
+            } else {
+                $categoria = new Categoria();
+                $categoria->obtenerPorId($id);
+                
+
+                return view('categoria.categoria-nuevo', compact('categoria', 'titulo'));
+            }
+        } else {
+            return redirect('admin/login');
+        }
+    }
+
+    public function eliminar(Request $request){
+        
+        $id = $request->input('id');
+
+        if (Usuario::autenticado() == true) {
+            if (Patente::autorizarOperacion("MENUELIMINAR")) {
+
+                $entidad = new Categoria();
+                $entidad->cargarDesdeRequest($request);
+                $entidad->eliminar();
+
+               
+                $aResultado["err"] = EXIT_SUCCESS; //eliminado correctamente
+            } else {
+                $codigo = "ELIMINARPROFESIONAL";
+                $aResultado["err"] = "No tiene pemisos para la operaci&oacute;n.";
+            }
+            echo json_encode($aResultado);
+        } else {
+            return redirect('admin/login');
+        }
     }
 
 

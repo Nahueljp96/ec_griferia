@@ -56,9 +56,9 @@ protected $table = 'postulaciones';
       public function guardar() {
         $sql = "UPDATE $this->table SET
             nombre='$this->nombre',
-            apellido=$this->apellido,
-            celular=$this->celular,
-            correo=$this->correo,
+            apellido='$this->apellido',
+            celular='$this->celular',
+            correo='$this->correo',
             curriculum='$this->curriculum'
             
             WHERE idpostulacion=?";
@@ -74,7 +74,7 @@ protected $table = 'postulaciones';
     public function obtenerPorId($idpostulacion)
     {
         $sql = "SELECT
-                idpostulacion
+                idpostulacion,
                 nombre,
                 apellido,
                 celular,
@@ -90,7 +90,6 @@ protected $table = 'postulaciones';
             $this->celular = $lstRetorno[0]->celular;
             $this->correo = $lstRetorno[0]->correo;
             $this->curriculum = $lstRetorno[0]->curriculum;
-            
             return $this;
         }
         return null;
@@ -107,6 +106,47 @@ protected $table = 'postulaciones';
                 A.curriculum
                 FROM $this->table A ORDER BY A.nombre DESC";
         $lstRetorno = DB::select($sql);
+        return $lstRetorno;
+    }
+
+    public function obtenerFiltrado()
+    {
+        $request = $_REQUEST;
+        $columns = array(  //orden de las columnas 
+            0 => 'A.idpostulacion',
+            1 => 'A.nombre',
+            2 => 'A.apellido',
+            3 => 'A.celular',
+            4 => 'A.correo',
+            5 => 'A.curriculum'
+            
+            
+        );                             
+        #El A. hace que le agregue un alias, es decir A referencia a la tabla productos
+        $sql = "SELECT DISTINCT  
+                    A.idpostulacion,
+                    A.nombre,
+                    A.apellido,
+                    A.celular,
+                    A.correo,
+                    A.curriculum
+                    FROM postulaciones A
+                    
+                WHERE 1=1
+                ";
+
+        //Realiza el filtrado, tiene los valores de configuración de busqueda.
+        if (!empty($request['search']['value'])) {
+            $sql .= " AND ( A.nombre LIKE '%" . $request['search']['value'] . "%' ";
+            $sql .= " OR A.apellido LIKE '%" . $request['search']['value'] . "%' ";
+            $sql .= " OR A.correo LIKE '%" . $request['search']['value'] . "%' ";
+            $sql .= " OR A.celular LIKE '%" . $request['search']['value'] . "%')";
+           
+        }
+        $sql .= " ORDER BY " . $columns[$request['order'][0]['column']] . "   " . $request['order'][0]['dir']; //forma de ordenarlo
+
+        $lstRetorno = DB::select($sql);
+
         return $lstRetorno;
     }
 

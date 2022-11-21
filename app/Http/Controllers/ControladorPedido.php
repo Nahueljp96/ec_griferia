@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-
+use Illuminate\Support\Facades\Log;
 use App\Entidades\Pedido; 
 use App\Entidades\Sucursal; 
 use App\Entidades\Cliente; 
@@ -26,9 +26,11 @@ class ControladorPedido extends Controller
 
         $estado = new Estado();
         $aEstados = $estado->obtenerTodos();
+
+        $pedido = new Pedido();
       
 
-        return view( 'pedido.pedido-nuevo', compact ('titulo', 'aSucursales', 'aClientes', 'aEstados'));
+        return view( 'pedido.pedido-nuevo', compact ('titulo', 'aSucursales', 'aClientes', 'aEstados', 'pedido'));
     }
 
     public function index()
@@ -64,11 +66,11 @@ class ControladorPedido extends Controller
         for ($i = $inicio; $i < count($aPedidos) && $cont < $registros_por_pagina; $i++) {
             $row = array();
             $row[] = "<a href='/admin/pedido/" .$aPedidos[$i]->idpedido. "' class='btn btn-secondary'><i class='fa-solid fa-pencil'></i></a>";
-            $row[] = $aPedidos[$i]->fecha;
+            $row[] = date_format(date_create($aPedidos[$i]->fecha), "d/m/Y");
             $row[] = $aPedidos[$i]->descripcion;
             $row[] = number_format ($aPedidos[$i]->total, 2, ",", "."); 
-            $row[] = $aPedidos[$i]->fk_idsucursal;
-            $row[] = $aPedidos[$i]->cliente. "<a href='/admin/cliente/" . '  '. "' class='btn btn-secondary'><i class='fa-solid fa-pencil'></i></a>";
+            $row[] = $aPedidos[$i]->sucursal;
+            $row[] = "<a href='/admin/cliente/" . $aPedidos[$i]->fk_idcliente."'>".$aPedidos[$i]->cliente . "</a>";
             $row[] = $aPedidos[$i]->estado;
             $cont++;
             $data[] = $row;
@@ -84,29 +86,34 @@ class ControladorPedido extends Controller
     }
 
     public function guardar(Request $request) {
-        
+        //Log::debug("holis");
         try {
+           // Log::debug("lola");
             //Define la entidad servicio
             $titulo = "Modificar Pedido";
             $entidad = new Pedido ();
             $entidad->cargarDesdeRequest($request);
-
-           //print_r($_REQUEST);
-           //exit;
+            
+           
             //validaciones
-            if ($entidad->fk_idcliente == "" || $entidad->fecha == "" || $entidad->estado == "" || $entidad->total == "") {
+            if ($entidad->fk_idcliente == "" || $entidad->fecha == "" || $entidad->fk_idestado == "" || $entidad->total == "") {
+                
                 $msg["ESTADO"] = MSG_ERROR;
                 $msg["MSG"] = "Complete todos los datos";
+                
             } else {
                      
                 if ($_POST["id"] > 0) {
                     //Es actualizacion
+                     
+                    
                     $entidad->guardar();
 
                     $msg["ESTADO"] = MSG_SUCCESS;
                     $msg["MSG"] = OKINSERT;
                 } else {
                     //Es nuevo
+                    
                     $entidad->insertar();
 
                     $msg["ESTADO"] = MSG_SUCCESS;
@@ -122,13 +129,69 @@ class ControladorPedido extends Controller
         }
 
         $id = $entidad->pedido;
+        
         $pedido = new Pedido();
         $pedido->obtenerPorId($id);
 
       
 
-        return view('pedido.pedido-nuevo', compact('msg', 'cliente', 'titulo')) . '?id=' . $pedido->idpedido;
+        return view('pedido.pedido-nuevo', compact('msg', 'pedido', 'titulo')) . '?id=' . $pedido->idpedido;
 
+    }
+
+    public function editar($id)
+    {
+        $titulo = "Modificar Pedido";
+        
+        //pregunta si el usuario esta autentificado
+        if (Usuario::autenticado() == true) {
+            if (!Patente::autorizarOperacion("MENUMODIFICACION")) {
+                $codigo = "MENUMODIFICACION";
+                $mensaje = "No tiene pemisos para la operaci&oacute;n.";
+                return view('sistema.pagina-error', compact('titulo', 'codigo', 'mensaje'));
+            } else {
+                $pedido = new Pedido();
+                $pedido->obtenerPorId($id);
+
+                $cliente = new Cliente();
+                $aClientes = $cliente->obtenerTodos();
+
+                $estado = new Estado();
+                $aEstados = $estado->obtenerTodos();
+
+                $sucursal = new Sucursal();
+                $aSucursales = $sucursal->obtenerTodos();
+
+
+                
+                return view('pedido.pedido-nuevo', compact('pedido', 'titulo', 'aClientes', 'aEstados', 'aSucursales'));
+            }
+        } else {
+            return redirect('admin/login');
+        }
+    }
+
+    public function eliminar(Request $request){
+        
+        $id = $request->input('id');
+
+        if (Usuario::autenticado() == true) {
+            if (Patente::autorizarOperacion("MENUELIMINAR")) {
+
+                $entidad = new Pedido();
+                $entidad->cargarDesdeRequest($request);
+                $entidad->eliminar();
+
+               
+                $aResultado["err"] = EXIT_SUCCESS; //eliminado correctamente
+            } else {
+                $codigo = "ELIMINARPROFESIONAL";
+                $aResultado["err"] = "No tiene pemisos para la operaci&oacute;n.";
+            }
+            echo json_encode($aResultado);
+        } else {
+            return redirect('admin/login');
+        }
     }
 
 

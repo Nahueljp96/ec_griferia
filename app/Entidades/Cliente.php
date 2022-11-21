@@ -119,11 +119,13 @@ protected $table = 'clientes';
         $columns = array(  //orden de las columnas 
             0 => 'A.idcliente',
             1 => 'A.nombre',
-            2 => 'A.dni',
-            3 => 'A.correo',
-            4 => 'A.celular',
+            2=>  'A.apellido',
+            3 => 'A.dni',
+            4 => 'A.correo',
+            5 => 'A.celular',
         );
-        $sql = "SELECT DISTINCT  #El A. hace que le agregue un alias, es decir A referencia a la tabla clientes
+        #El A. hace que le agregue un alias, es decir A referencia a la tabla clientes
+        $sql = "SELECT DISTINCT  
                     A.idcliente,  
                     A.nombre,
                     A.apellido,

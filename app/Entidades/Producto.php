@@ -78,7 +78,7 @@ protected $table = 'productos';
     public function obtenerPorId($idproducto)
     {
         $sql = "SELECT
-                idproducto
+                idproducto,
                 nombre,
                 cantidad,
                 precio,
@@ -92,6 +92,7 @@ protected $table = 'productos';
             $this->idproducto = $lstRetorno[0]->idproducto;
             $this->nombre = $lstRetorno[0]->nombre;
             $this->cantidad = $lstRetorno[0]->cantidad;
+            $this->precio= $lstRetorno[0]->precio;
             $this->imagen = $lstRetorno[0]->imagen;
             $this->fk_idcategoria = $lstRetorno[0]->fk_idcategoria;
             $this->descripcion =$lstRetorno[0]->descripcion;

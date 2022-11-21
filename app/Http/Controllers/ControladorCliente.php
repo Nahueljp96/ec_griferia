@@ -15,7 +15,8 @@ class ControladorCliente extends Controller
     public function nuevo()
     {
         $titulo = "Nuevo cliente";
-        return view( 'cliente.cliente-nuevo', compact ('titulo'));
+        $cliente = new Cliente();
+        return view( 'cliente.cliente-nuevo', compact ('titulo', 'cliente'));
     }
 
     public function index()
@@ -52,8 +53,8 @@ class ControladorCliente extends Controller
             $row = array();
             $row[] = "<a href='/admin/cliente/" .$aClientes[$i]->idcliente. "' class='btn btn-secondary'><i class='fa-solid fa-pencil'></i></a>";
             $row[] = $aClientes[$i]->nombre . " " . $aClientes[$i]->apellido;
-            $row[] = $aClientes[$i]->dni;
             $row[] = $aClientes[$i]->correo;
+            $row[] = $aClientes[$i]->dni;
             $row[] = $aClientes[$i]->celular;
             $cont++;
             $data[] = $row;
@@ -110,6 +111,50 @@ class ControladorCliente extends Controller
 
         return view('cliente.cliente-nuevo', compact('msg', 'cliente', 'titulo')) . '?id=' . $cliente->idcliente;
 
+    }
+
+    public function editar($id)
+    {
+        $titulo = "Modificar Cliente";
+        //pregunta si el usuario esta autentificado
+        if (Usuario::autenticado() == true) {
+            
+            if (!Patente::autorizarOperacion("MENUMODIFICACION")) {
+                $codigo = "MENUMODIFICACION";
+                $mensaje = "No tiene pemisos para la operaci&oacute;n.";
+                return view('sistema.pagina-error', compact('titulo', 'codigo', 'mensaje'));
+            } else {
+                $cliente = new Cliente();
+                $cliente->obtenerPorId($id);
+                
+                return view('cliente.cliente-nuevo', compact('cliente', 'titulo'));
+            }
+        } else {
+            return redirect('admin/login');
+        }
+    }
+
+    public function eliminar(Request $request){
+        
+        $id = $request->input('id');
+
+        if (Usuario::autenticado() == true) {
+            if (Patente::autorizarOperacion("MENUELIMINAR")) {
+
+                $entidad = new Cliente();
+                $entidad->cargarDesdeRequest($request);
+                $entidad->eliminar();
+
+               
+                $aResultado["err"] = EXIT_SUCCESS; //eliminado correctamente
+            } else {
+                $codigo = "ELIMINARPROFESIONAL";
+                $aResultado["err"] = "No tiene pemisos para la operaci&oacute;n.";
+            }
+            echo json_encode($aResultado);
+        } else {
+            return redirect('admin/login');
+        }
     }
 }
 ?>

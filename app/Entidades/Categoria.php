@@ -78,6 +78,37 @@ protected $table = 'categorias';
                 FROM $this->table A ORDER BY A.nombre";
         $lstRetorno = DB::select($sql);
         return $lstRetorno;
-    }  
+    }
+    
+    public function obtenerFiltrado()
+    {
+        $request = $_REQUEST;
+        $columns = array(  //orden de las columnas 
+            0 => 'A.idcategoria',
+            1 => 'A.nombre',
+           
+            
+        );                             
+        #El A. hace que le agregue un alias, es decir A referencia a la tabla productos
+        $sql = "SELECT DISTINCT  
+                    A.idcategoria,
+                    A.nombre
+                    FROM categorias A
+                    
+                WHERE 1=1
+                ";
+
+        //Realiza el filtrado, tiene los valores de configuración de busqueda.
+        if (!empty($request['search']['value'])) {
+            $sql .= " AND ( A.nombre LIKE '%" . $request['search']['value'] . "%' ";
+           // $sql .= " OR A.nombre LIKE '%" . $request['search']['value'] . "%' ";
+            
+        }
+        $sql .= " ORDER BY " . $columns[$request['order'][0]['column']] . "   " . $request['order'][0]['dir']; //forma de ordenarlo
+
+        $lstRetorno = DB::select($sql);
+
+        return $lstRetorno;
+    }
 }
 ?>

@@ -2,7 +2,7 @@
 @section('titulo', "$titulo")
 @section('scripts')
 <script>
-    globalId = '<?php echo isset($cliente->idcliente) && $cliente->idcliente > 0 ? $cliente->ididcliente : 0; ?>';
+    globalId = '<?php echo isset($cliente->idcliente) && $cliente->idcliente > 0 ? $cliente->idcliente : 0; ?>';
     <?php $globalId = isset($cliente->idcliente) ? $cliente->idcliente : "0";?>
 </script>
 @endsection
@@ -49,27 +49,27 @@ if (isset($msg)) {
                   <input type="hidden" id="id" name="id" class="form-control" value="{{$globalId}}" required> <!--Almacena el Id en el caso de estar editando !-->
                   <div class="form-group col-lg-6">
                   <label>Nombre: *</label>
-                        <input type="text" id="txtNombre" name="txtNombre" class="form-control" value="" required>
+                        <input type="text" id="txtNombre" name="txtNombre" class="form-control" value="{{ $cliente->nombre }}" required>
                   </div> 
                  
                 <div class="form-group col-lg-6">
                 <label>Correo: *</label>
-                    <input type="email" id="txtCorreo" name="txtCorreo" class="form-control" value="" required>
+                    <input type="email" id="txtCorreo" name="txtCorreo" class="form-control" value="{{ $cliente->correo }}" required>
                 </div> 
                  
                 <div class="form-group col-lg-6">
                 <label>Apellido: *</label>
-                    <input type="text" id="txtApellido" name="txtApellido" class="form-control" value="" required>
+                    <input type="text" id="txtApellido" name="txtApellido" class="form-control" value="{{ $cliente->apellido }}" required>
                 </div> 
             
                 <div class="form-group col-lg-6">
                 <label>Celular: *</label>
-                    <input type="text" id="txtCelular" name="txtCelular" class="form-control" value="" required>
+                    <input type="text" id="txtCelular" name="txtCelular" class="form-control" value="{{ $cliente->celular }}" required>
                 </div> 
 
                 <div class="form-group col-lg-6">
                 <label>Dni: *</label>
-                    <input type="text" id="txtDni" name="txtDni" class="form-control" value="" required>
+                    <input type="text" id="txtDni" name="txtDni" class="form-control" value="{{ $cliente->dni }}" required>
                 </div> 
                 <div class="form-group col-lg-6">
                 <label>Clave: *</label>
@@ -111,6 +111,7 @@ if (isset($msg)) {
     }
 
     function eliminar() {
+        console.log("globalid",globalId)
         $.ajax({
             type: "GET",
             url: "{{ asset('admin/cliente/eliminar') }}",

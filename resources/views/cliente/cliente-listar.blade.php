@@ -29,7 +29,7 @@ if (isset($msg)) {
             <th></th>
             <th>Nombre y Apellido</th>
             <th>Correo </th>
-            <th>Documento</th>
+            <th>Dni</th>
             <th>Celular</th>
         </tr>
     </thead>

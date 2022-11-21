@@ -30,10 +30,12 @@ protected $table = 'pedidos';
         $this->fk_idsucursal = $request->input('lstSucursal');
         $this->fk_idcliente = $request->input('lstCliente');
         $this->fk_idestado = $request->input('lstEstado');
+        
       }
 
       public function insertar()
       {
+            
           $sql = "INSERT INTO $this->table (
                   fecha,
                   descripcion,
@@ -53,16 +55,16 @@ protected $table = 'pedidos';
              
           ]);
           return $this->idpedido = DB::getPdo()->lastInsertId();
-      }
+        }
 
       public function guardar() {
         $sql = "UPDATE $this->table SET
             fecha='$this->fecha',
             descripcion='$this->descripcion',
-            total=$this->total,
-            fk_idsucursal=$this->fk_idsucursal,
-            fk_idcliente=$this->fk_idcliente,
-            fk_idestado=$this->fk_idestado
+            total='$this->total',
+            fk_idsucursal='$this->fk_idsucursal',
+            fk_idcliente='$this->fk_idcliente',
+            fk_idestado='$this->fk_idestado'
            
             WHERE idpedido=?";
         $affected = DB::update($sql, [$this->idpedido]);
@@ -135,6 +137,7 @@ protected $table = 'pedidos';
                     A.descripcion,
                     A.total,
                     A.fk_idsucursal,
+                    D.nombre AS sucursal,
                     A.fk_idcliente,
                     B.nombre AS cliente,
                     A.fk_idestado,
@@ -142,18 +145,18 @@ protected $table = 'pedidos';
                     FROM pedidos A
                     INNER JOIN clientes B on A.fk_idcliente = B.idcliente
                     INNER JOIN estados C on A.fk_idestado = C.idestado
+                    INNER JOIN sucursales D on A.fk_idsucursal = D.idsucursal
 
                 WHERE 1=1
                 ";
 
         //Realiza el filtrado, tiene los valores de configuración de busqueda.
         if (!empty($request['search']['value'])) {
-            $sql .= " AND ( A.nombre LIKE '%" . $request['search']['value'] . "%' ";
+            $sql .= " AND ( B.nombre LIKE '%" . $request['search']['value'] . "%' ";
             $sql .= " OR A.fecha LIKE '%" . $request['search']['value'] . "%' ";
             $sql .= " OR A.descripcion LIKE '%" . $request['search']['value'] . "%' ";
-            $sql .= " OR A.fk_idsucursal LIKE '%" . $request['search']['value'] . "%' ";
-            $sql .= " OR A.fk_idcliente LIKE '%" . $request['search']['value'] . "%' )";
-            $sql .= " OR A.fk_idestado LIKE '%" . $request['search']['value'] . "%' )";
+            $sql .= " OR D.nombre LIKE '%" . $request['search']['value'] . "%' ";
+            $sql .= " OR C.nombre LIKE '%" . $request['search']['value'] . "%' )";
         }
         $sql .= " ORDER BY " . $columns[$request['order'][0]['column']] . "   " . $request['order'][0]['dir']; //forma de ordenarlo
 

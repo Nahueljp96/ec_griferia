@@ -9,7 +9,7 @@
 @section('breadcrumb')
 <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="/admin/home">Inicio</a></li>
-    <li class="breadcrumb-item"><a href="/admin/pedido">Pedidos</a></li>
+    <li class="breadcrumb-item"><a href="/admin/pedidos">Pedidos</a></li>
     <li class="breadcrumb-item active">Modificar</li>
 </ol>
 <ol class="toolbar">
@@ -49,17 +49,17 @@ if (isset($msg)) {
                   <input type="hidden" id="id" name="id" class="form-control" value="{{$globalId}}" required> <!--Almacena el Id en el caso de estar editando !-->
                   <div class="form-group col-lg-6">
                   <label>Fecha: *</label>
-                        <input type="date" id="txtFecha" name="txtFecha" class="form-control" value="" required>
+                        <input type="date" id="txtFecha" name="txtFecha" class="form-control" value="{{$pedido->fecha}}" required>
                   </div> 
                  
                 <div class="form-group col-lg-6">
                 <label>Descripcion: *</label>
-                    <input type="text" id="txtDescripcion" name="txtDescripcion" class="form-control" value="">
+                    <input type="text" id="txtDescripcion" name="txtDescripcion" class="form-control" value="{{$pedido->descripcion}}"required>
                 </div> 
                 <div class="form-group col-lg-6">
                     <label>Cliente: *</label>
-                    <select class="form-control" name="lstCliente" id="lstCliente">
-                            <option selected="" disabled>Seleccionar</option>
+                    <select class="form-control" name="lstCliente" id="lstCliente" required>
+                            <option selected="" disabled value="">Seleccionar</option>
                             @foreach($aClientes as $item)
                                 <option value="{{ $item->idcliente}}">{{ $item->nombre}} {{ $item->apellido}}</option>
                                 
@@ -68,7 +68,7 @@ if (isset($msg)) {
                 </div> 
                 <div class="form-group col-lg-6">
                 <label>Estado: *</label>
-                    <select class="form-control" name="lstEstado" id="lstEstado">
+                    <select class="form-control" name="lstEstado" id="lstEstado"required>
                         <option selected="" disiabled>Seleccionar</option>
                         @foreach($aEstados as $item)
                             <option value="{{ $item->idestado}}">{{ $item->nombre}}</option>
@@ -78,7 +78,7 @@ if (isset($msg)) {
                 </div> 
                 <div class="form-group col-lg-6">
                     <label>Sucursal: *</label>
-                    <select class="form-control" name="lstSucursal" id="lstSucursal">
+                    <select class="form-control" name="lstSucursal" id="lstSucursal" required>
                         <option disabled selected>Seleccionar</option>
                             @foreach($aSucursales as $item)
                                 <option value="{{ $item->idsucursal}}">{{ $item->nombre}}</option>
@@ -89,7 +89,7 @@ if (isset($msg)) {
                  
                 <div class="form-group col-lg-6">
                 <label>Total: *</label>
-                    <input type="number" id="txtTotal" name="txtTotal" class="form-control" value="" required>
+                    <input type="number" id="txtTotal" name="txtTotal" class="form-control" value="{{$pedido->total}}" required>
                 </div> 
             
             </div>        

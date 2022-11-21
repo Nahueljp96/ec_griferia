@@ -16,11 +16,12 @@ class ControladorProducto extends Controller
     public function nuevo()
     {
         $titulo = "Nuevo producto";
+        $producto = New Producto;
 
         $categoria = new Categoria();
         $aCategorias = $categoria->obtenerTodos();
 
-        return view( 'producto.producto-nuevo', compact ('titulo') , compact ('aCategorias'));
+        return view( 'producto.producto-nuevo', compact ('titulo','producto', 'aCategorias') );
     }
 
     public function index()
@@ -117,6 +118,52 @@ class ControladorProducto extends Controller
 
         return view('producto.producto-nuevo', compact('msg', 'producto', 'titulo')) . '?id=' . $producto->idproducto;
 
+    }
+
+    public function editar($id)
+    {
+        $titulo = "Modificar Producto";
+        //pregunta si el usuario esta autentificado
+        if (Usuario::autenticado() == true) {
+            if (!Patente::autorizarOperacion("MENUMODIFICACION")) {
+                $codigo = "MENUMODIFICACION";
+                $mensaje = "No tiene pemisos para la operaci&oacute;n.";
+                return view('sistema.pagina-error', compact('titulo', 'codigo', 'mensaje'));
+            } else {
+                $producto = new Producto();
+                $producto->obtenerPorId($id);
+
+                $categoria = new Categoria();
+                $aCategorias = $categoria->obtenerTodos();
+
+                return view('producto.producto-nuevo', compact('producto', 'titulo', 'aCategorias'));
+            }
+        } else {
+            return redirect('admin/login');
+        }
+    }
+
+    public function eliminar(Request $request){
+        
+        $id = $request->input('id');
+
+        if (Usuario::autenticado() == true) {
+            if (Patente::autorizarOperacion("MENUELIMINAR")) {
+
+                $entidad = new Producto();
+                $entidad->cargarDesdeRequest($request);
+                $entidad->eliminar();
+
+               
+                $aResultado["err"] = EXIT_SUCCESS; //eliminado correctamente
+            } else {
+                $codigo = "ELIMINARPROFESIONAL";
+                $aResultado["err"] = "No tiene pemisos para la operaci&oacute;n.";
+            }
+            echo json_encode($aResultado);
+        } else {
+            return redirect('admin/login');
+        }
     }
 
 

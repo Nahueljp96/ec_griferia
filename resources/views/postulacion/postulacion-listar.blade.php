@@ -26,17 +26,28 @@ if (isset($msg)) {
 <table id="grilla" class="display">
     <thead>
         <tr>
+            <th></th>
             <th>Nombre</th>
-            <th>Telefono </th>
-            <th>Dirección</th>
-            <th>Linkmapa</th>
+            <th>Apellido </th>
+            <th>Celular</th>
+            <th>Correo</th>
+            <th>Curriculum</th>
           
         </tr>
     </thead>
 </table> 
 <script>
 	$(document).ready( function () {
-        $('#grilla').DataTable();
+        var dataTable = $('#grilla').DataTable({
+	    "processing": true, // que se Procesa
+        "serverSide": true, // que se ejecuta del lado del servidor 
+	    "bFilter": true, // que tiene el filtro/sistema de filtrado
+	    "bInfo": true,
+	    "bSearchable": true, //barra de busqueda
+        "pageLength": 25, // cantidad de registros por página
+        "order": [[ 0, "asc" ]], // ordenamiento desde la primera columna de manera ascendente
+	    "ajax": "{{ route('postulacion.cargarGrilla') }}" //atributo que busca los datos para la grilla.
+	});
 } );   
 </script>
 @endsection

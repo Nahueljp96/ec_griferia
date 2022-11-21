@@ -1,6 +1,7 @@
 @extends('plantilla')
 @section('titulo', "$titulo")
 @section('scripts')
+
 <script>
     globalId = '<?php echo isset($producto->idproducto) && $producto->idproducto > 0 ? $producto->idproducto : 0; ?>';
     <?php $globalId = isset($producto->idproducto) ? $producto->idproducto : "0";?>
@@ -49,37 +50,42 @@ if (isset($msg)) {
                   <input type="hidden" id="id" name="id" class="form-control" value="{{$globalId}}" required> <!--Almacena el Id en el caso de estar editando !-->
                   <div class="form-group col-lg-6">
                   <label>Nombre: *</label>
-                        <input type="text" id="txtNombre" name="txtNombre" class="form-control" value="" required>
+                        <input type="text" id="txtNombre" name="txtNombre" class="form-control" value="{{$producto->nombre}}" required>
                   </div> 
                  
                 <div class="form-group col-lg-6">
                 <label>Cantidad: *</label>
-                    <input type="number" id="txtCantidad" name="txtCantidad" class="form-control" value="" required>
+                    <input type="number" id="txtCantidad" name="txtCantidad" class="form-control" value="{{$producto->cantidad}}" required>
                 </div> 
                  
                 <div class="form-group col-lg-6">
                 <label>Precio: *</label>
-                    <input type="number" id="txtPrecio" name="txtPrecio" class="form-control" value="" required>
+                    <input type="number" id="txtPrecio" name="txtPrecio" class="form-control" value="{{$producto->precio}}" required>
                 </div> 
             
                 <div class="col-3">
                     <label>Imagen: *</label>
-                    <input type="file" id="imagen" name="imagen" class="" value="">
+                    <input type="file" id="imagen" name="imagen" class="" value="{{$producto->imagen}}">
                     <img src="" alt="">
                 </div> 
-                <div class="form-group col-lg-6">
-                    <label>Categoria: *</label>
-                    <select name="lstCategoria" id="lstCategoria" class="form-control">
-                        <option value=""disiable>Seleccionar</option>
-                        @foreach ($aCategorias as $i)
-                        <option value="{{ $i->idcategoria}}">{{ $i->nombre}}</option>
+                <div class="form-group col-6"> <!--Como traer al editar el desplegable ¡-->
+                <label>Categoria: *</label>
+                <select id="lstCategoria" name="lstCategoria" class="form-control selectpicker" required>
+                    <option value="" disabled selected>Seleccionar</option>
+                        @foreach($aCategorias as $categoria)
+                        @if($categoria->idcategoria == $producto->fk_idcategoria)
+                    <option selected value="{{ $categoria->idcategoria }}">{{ $categoria->nombre }}</option>
+                        @else
+                    <option value="{{ $categoria->idcategoria }}">{{ $categoria->nombre }}</option>
+                        @endif
                         @endforeach
-                    </select>    
-                </div>
+                </select>
+            </div>
+
                 
                 <div class="form-group col-lg-6">
                 <label>Descripcion: *</label>
-                    <input type="text" id="txtDescripcion" name="txtDescripcion" class="form-control" value="" required>
+                    <input type="text" id="txtDescripcion" name="txtDescripcion" class="form-control" value="{{$producto->descripcion}}" required>
                 </div> 
                 
             </div>
