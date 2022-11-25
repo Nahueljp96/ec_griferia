@@ -43,7 +43,7 @@ if (isset($msg)) {
 }
 ?>
 
-      <form id="form1" method="POST">
+      <form id="form1" method="POST" enctype="multipart/form-data">
             <div class="row">
                 
                   <input type="hidden" name="_token" value="{{ csrf_token() }}"></input> <!--Linea de seguridad !-->
@@ -65,7 +65,7 @@ if (isset($msg)) {
             
                 <div class="col-3">
                     <label>Imagen: *</label>
-                    <input type="file" id="imagen" name="imagen" class="" value="{{$producto->imagen}}">
+                    <input type="file" id="archivo" name="archivo" class="" value="{{$producto->imagen}}">
                     <img src="" alt="">
                 </div> 
                 <div class="form-group col-6"> <!--Como traer al editar el desplegable ¡-->

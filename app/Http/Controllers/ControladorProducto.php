@@ -60,7 +60,7 @@ class ControladorProducto extends Controller
             $row[] = $aProductos[$i]->nombre;
             $row[] = $aProductos[$i]->cantidad;
             $row[] = "$". number_format ($aProductos[$i]->precio, 2, ",", "."); 
-            $row[] = $aProductos[$i]->imagen;
+            $row[] = "<img src='/files/" .$aProductos[$i]->imagen. "' class='img-thumbnail'>";
             $row[] = $aProductos[$i]->categoria;
             $row[] = $aProductos[$i]->descripcion;
             $cont++;
@@ -79,9 +79,18 @@ class ControladorProducto extends Controller
     public function guardar(Request $request) {
         try {
             //Define la entidad servicio
-            $titulo = "Modificar cliente";
+            $titulo = "Modificar Producto";
             $entidad = new Producto ();
             $entidad->cargarDesdeRequest($request);
+
+            if ($_FILES["archivo"]["error"] === UPLOAD_ERR_OK) { //Se adjunta imagen
+                $extension = pathinfo($_FILES["archivo"]["name"], PATHINFO_EXTENSION);
+                 $nombre = date("Ymdhmsi") . ".$extension";
+                 $archivo = $_FILES["archivo"]["tmp_name"];
+                 move_uploaded_file($archivo, env('APP_PATH') . "/public/files/$nombre"); //guardaelarchivo
+                 $entidad->imagen = $nombre;
+            }
+  
 
             //validaciones
             if ($entidad->nombre == "") {
@@ -89,6 +98,16 @@ class ControladorProducto extends Controller
                 $msg["MSG"] = "Complete todos los datos";
             } else {
                 if ($_POST["id"] > 0) {
+                    $productAnt = new Producto();
+                    $productAnt->obtenerPorId($entidad->idproducto);
+
+                    if($_FILES["archivo"]["error"] === UPLOAD_ERR_OK){
+                        //Eliminar imagen anterior
+                        @unlink(env('APP_PATH') . "/public/files/$productAnt->imagen");                          
+                    } else {
+                        $entidad->imagen = $productAnt->imagen;
+                    }
+ 
                     //Es actualizacion
                     $entidad->guardar();
 
@@ -152,6 +171,7 @@ class ControladorProducto extends Controller
 
                 $entidad = new Producto();
                 $entidad->cargarDesdeRequest($request);
+                @unlink(env('APP_PATH') . "/public/files/$entidad->imagen");                          
                 $entidad->eliminar();
 
                

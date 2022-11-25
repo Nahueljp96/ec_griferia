@@ -83,7 +83,7 @@ class ControladorPostulacion extends Controller
                 $extension = pathinfo($_FILES["archivo"]["name"], PATHINFO_EXTENSION);
                  $nombre = date("Ymdhmsi") . ".$extension";
                  $archivo = $_FILES["archivo"]["tmp_name"];
-                 move_uploaded_file($archivo, env('APP_PATH') . "/public/files/$nombre"); //guardaelarchivo
+                 move_uploaded_file($archivo, env('APP_PATH') . "/public/files/$nombre"); //guarda el archivo
                  $entidad->curriculum = $nombre;
             }
   
@@ -166,6 +166,7 @@ class ControladorPostulacion extends Controller
 
                 $entidad = new Postulacion();
                 $entidad->cargarDesdeRequest($request);
+                @unlink(env('APP_PATH') . "/public/files/$entidad->curriculum");
                 $entidad->eliminar();
 
 

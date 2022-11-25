@@ -60,10 +60,10 @@ protected $table = 'productos';
       public function guardar() {
         $sql = "UPDATE $this->table SET
             nombre='$this->nombre',
-            cantidad=$this->cantidad,
-            precio=$this->precio,
+            cantidad='$this->cantidad',
+            precio='$this->precio',
             imagen='$this->imagen',
-            fk_idcategoria=$this->fk_idcategoria
+            fk_idcategoria='$this->fk_idcategoria',
             descripcion='$this->descripcion'
             WHERE idproducto=?";
         $affected = DB::update($sql, [$this->idproducto]);
