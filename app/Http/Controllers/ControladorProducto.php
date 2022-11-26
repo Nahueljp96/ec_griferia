@@ -14,22 +14,31 @@ require app_path() . '/start/constants.php';
 class ControladorProducto extends Controller
 {
     public function nuevo()
-    {
-        $titulo = "Nuevo producto";
-        $producto = New Producto;
+    {   
+        $titulo = "Nuevo Producto";
 
-        $categoria = new Categoria();
-        $aCategorias = $categoria->obtenerTodos();
-
-        return view( 'producto.producto-nuevo', compact ('titulo','producto', 'aCategorias') );
+        if (Usuario::autenticado() == true) { //validación
+            if (!Patente::autorizarOperacion("PRODUCTOCONSULTA")) { //otra validación
+                $codigo = "PRODUCTOCONSULTA";
+                $mensaje = "No tiene permisos para la operaci&oacute;n.";
+                return view('sistema.pagina-error', compact('titulo', 'codigo', 'mensaje'));
+            } else {
+                $producto = New Producto;
+                $categoria = new Categoria();
+                $aCategorias = $categoria->obtenerTodos();
+                return view( 'producto.producto-nuevo', compact ('titulo','producto', 'aCategorias') );
+            }
+        } else {
+            return redirect('admin/login');
+        }
     }
 
     public function index()
     {
         $titulo = "Listado de Productos";
         if (Usuario::autenticado() == true) { //validación
-            if (!Patente::autorizarOperacion("MENUCONSULTA")) { //otra validación
-                $codigo = "MENUCONSULTA";
+            if (!Patente::autorizarOperacion("PRODUCTOCONSULTA")) { //otra validación
+                $codigo = "PRODUCTOCONSULTA";
                 $mensaje = "No tiene permisos para la operaci&oacute;n.";
                 return view('sistema.pagina-error', compact('titulo', 'codigo', 'mensaje'));
             } else {

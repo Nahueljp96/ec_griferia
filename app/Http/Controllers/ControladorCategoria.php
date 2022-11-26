@@ -12,19 +12,32 @@ require app_path() . '/start/constants.php';
 
 class ControladorCategoria extends Controller
 {
+    
     public function nuevo()
-    {
+    {   
         $titulo = "Nueva Categoria";
-        $categoria = new Categoria();
-        return view( 'categoria.categoria-nuevo', compact ('titulo','categoria'));
+
+        if (Usuario::autenticado() == true) { //validación
+            if (!Patente::autorizarOperacion("CATEGORIACONSULTA")) { //otra validación
+                $codigo = "CATEGORIACONSULTA";
+                $mensaje = "No tiene permisos para la operaci&oacute;n.";
+                return view('sistema.pagina-error', compact('titulo', 'codigo', 'mensaje'));
+            } else {
+                $categoria = new Categoria();
+
+                return view( 'categoria.categoria-nuevo', compact ('titulo','categoria'));
+            }
+        } else {
+            return redirect('admin/login');
+        }
     }
 
     public function index()
     {
         $titulo = "Listado de Categorias";
         if (Usuario::autenticado() == true) { //validación
-            if (!Patente::autorizarOperacion("MENUCONSULTA")) { //otra validación
-                $codigo = "MENUCONSULTA";
+            if (!Patente::autorizarOperacion("CATEGORIACONSULTA")) { //otra validación
+                $codigo = "CATEGORIACONSULTA";
                 $mensaje = "No tiene permisos para la operaci&oacute;n.";
                 return view('sistema.pagina-error', compact('titulo', 'codigo', 'mensaje'));
             } else {

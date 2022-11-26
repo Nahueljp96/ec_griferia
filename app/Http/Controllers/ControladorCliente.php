@@ -13,18 +13,29 @@ require app_path() . '/start/constants.php';
 class ControladorCliente extends Controller
 {
     public function nuevo()
-    {
+    {   
         $titulo = "Nuevo cliente";
-        $cliente = new Cliente();
-        return view( 'cliente.cliente-nuevo', compact ('titulo', 'cliente'));
+
+        if (Usuario::autenticado() == true) { //validación
+            if (!Patente::autorizarOperacion("CLIENTECONSULTA")) { //otra validación
+                $codigo = "CLIENTECONSULTA";
+                $mensaje = "No tiene permisos para la operaci&oacute;n.";
+                return view('sistema.pagina-error', compact('titulo', 'codigo', 'mensaje'));
+            } else {
+                $cliente = new Cliente();
+                return view('cliente.cliente-nuevo', compact('titulo', 'cliente'));
+            }
+        } else {
+            return redirect('admin/login');
+        }
     }
 
     public function index()
     {
         $titulo = "Listado de Clientes";
         if (Usuario::autenticado() == true) { //validación
-            if (!Patente::autorizarOperacion("MENUCONSULTA")) { //otra validación
-                $codigo = "MENUCONSULTA";
+            if (!Patente::autorizarOperacion("CLIENTECONSULTA")) { //otra validación
+                $codigo = "CLIENTECONSULTA";
                 $mensaje = "No tiene permisos para la operaci&oacute;n.";
                 return view('sistema.pagina-error', compact('titulo', 'codigo', 'mensaje'));
             } else {

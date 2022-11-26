@@ -12,19 +12,32 @@ require app_path() . '/start/constants.php';
 
 class ControladorEstado extends Controller
 {
+    
+
     public function nuevo()
-    {
+    {   
         $titulo = "Nuevo Estado";
-        $estado = new Estado();
-        return view( 'estado.estado-nuevo', compact ('titulo', 'estado'));
+
+        if (Usuario::autenticado() == true) { //validación
+            if (!Patente::autorizarOperacion("ESTADOCONSULTA")) { //otra validación
+                $codigo = "ESTADOCONSULTA";
+                $mensaje = "No tiene permisos para la operaci&oacute;n.";
+                return view('sistema.pagina-error', compact('titulo', 'codigo', 'mensaje'));
+            } else {
+                $estado = new Estado();
+                return view( 'estado.estado-nuevo', compact ('titulo', 'estado'));
+            }
+        } else {
+            return redirect('admin/login');
+        }
     }
 
     public function index()
     {
         $titulo = "Listado de Estados";
         if (Usuario::autenticado() == true) { //validación
-            if (!Patente::autorizarOperacion("MENUCONSULTA")) { //otra validación
-                $codigo = "MENUCONSULTA";
+            if (!Patente::autorizarOperacion("ESTADOCONSULTA")) { //otra validación
+                $codigo = "ESTADOCONSULTA";
                 $mensaje = "No tiene permisos para la operaci&oacute;n.";
                 return view('sistema.pagina-error', compact('titulo', 'codigo', 'mensaje'));
             } else {

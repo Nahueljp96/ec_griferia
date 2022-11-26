@@ -15,30 +15,44 @@ require app_path() . '/start/constants.php';
 
 class ControladorPedido extends Controller
 {
+    
+
     public function nuevo()
-    {
+    {   
         $titulo = "Nuevo pedido";
-        $sucursal = new Sucursal();
-        $aSucursales = $sucursal->obtenerTodos();
 
-        $cliente = new Cliente();
-        $aClientes = $cliente->obtenerTodos();
+        if (Usuario::autenticado() == true) { //validación
+            if (!Patente::autorizarOperacion("PEDIDOCONSULTA")) { //otra validación
+                $codigo = "PEDIDOCONSULTA";
+                $mensaje = "No tiene permisos para la operaci&oacute;n.";
+                return view('sistema.pagina-error', compact('titulo', 'codigo', 'mensaje'));
+            } else {
 
-        $estado = new Estado();
-        $aEstados = $estado->obtenerTodos();
+                $sucursal = new Sucursal();
+                $aSucursales = $sucursal->obtenerTodos();
 
-        $pedido = new Pedido();
-      
+                $cliente = new Cliente();
+                $aClientes = $cliente->obtenerTodos();
 
-        return view( 'pedido.pedido-nuevo', compact ('titulo', 'aSucursales', 'aClientes', 'aEstados', 'pedido'));
+                $estado = new Estado();
+                $aEstados = $estado->obtenerTodos();
+
+                $pedido = new Pedido();
+
+                return view( 'pedido.pedido-nuevo', compact ('titulo', 'aSucursales', 'aClientes', 'aEstados', 'pedido'));
+            }
+        } else {
+            return redirect('admin/login');
+        }
     }
+
 
     public function index()
     {
         $titulo = "Listado de Pedidos";
         if (Usuario::autenticado() == true) { //validación
-            if (!Patente::autorizarOperacion("MENUCONSULTA")) { //otra validación
-                $codigo = "MENUCONSULTA";
+            if (!Patente::autorizarOperacion("PEDIDOCONSULTA")) { //otra validación
+                $codigo = "PEDIDOCONSULTA";
                 $mensaje = "No tiene permisos para la operaci&oacute;n.";
                 return view('sistema.pagina-error', compact('titulo', 'codigo', 'mensaje'));
             } else {

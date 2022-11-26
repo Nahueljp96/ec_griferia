@@ -13,20 +13,30 @@ require app_path() . '/start/constants.php';
 class ControladorSucursal extends Controller
 {
     public function nuevo()
-    {
+    {   
         $titulo = "Nueva Sucursal";
 
-        $sucursal = new Sucursal();
+        if (Usuario::autenticado() == true) { //validación
+            if (!Patente::autorizarOperacion("SUCURSALCONSULTA")) { //otra validación
+                $codigo = "SUCURSALCONSULTA";
+                $mensaje = "No tiene permisos para la operaci&oacute;n.";
+                return view('sistema.pagina-error', compact('titulo', 'codigo', 'mensaje'));
+            } else {
+                $sucursal = new Sucursal();
 
-        return view( 'sucursal.sucursal-nuevo', compact ('titulo', 'sucursal'));
+                return view( 'sucursal.sucursal-nuevo', compact ('titulo', 'sucursal'));
+            }
+        } else {
+            return redirect('admin/login');
+        }
     }
 
     public function index()
     {
         $titulo = "Listado de Sucursales";
         if (Usuario::autenticado() == true) { //validación
-            if (!Patente::autorizarOperacion("MENUCONSULTA")) { //otra validación
-                $codigo = "MENUCONSULTA";
+            if (!Patente::autorizarOperacion("SUCURSALCONSULTA")) { //otra validación
+                $codigo = "SUCURSALCONSULTA";
                 $mensaje = "No tiene permisos para la operaci&oacute;n.";
                 return view('sistema.pagina-error', compact('titulo', 'codigo', 'mensaje'));
             } else {

@@ -13,19 +13,30 @@ require app_path() . '/start/constants.php';
 class ControladorPostulacion extends Controller
 {
     public function nuevo()
-    {
+    {   
         $titulo = "Nueva postulacion";
-        $postulacion = new Postulacion();
 
-        return view( 'postulacion.postulacion-nuevo', compact ('titulo', 'postulacion'));
+        if (Usuario::autenticado() == true) { //validación
+            if (!Patente::autorizarOperacion("POSTULACIONCONSULTA")) { //otra validación
+                $codigo = "POSTULACIONCONSULTA";
+                $mensaje = "No tiene permisos para la operaci&oacute;n.";
+                return view('sistema.pagina-error', compact('titulo', 'codigo', 'mensaje'));
+            } else {
+                $postulacion = new Postulacion();
+
+                return view( 'postulacion.postulacion-nuevo', compact ('titulo', 'postulacion'));
+            }
+        } else {
+            return redirect('admin/login');
+        }
     }
 
     public function index()
     {
         $titulo = "Listado de Postulaciones";
         if (Usuario::autenticado() == true) { //validación
-            if (!Patente::autorizarOperacion("MENUCONSULTA")) { //otra validación
-                $codigo = "MENUCONSULTA";
+            if (!Patente::autorizarOperacion("POSTULACIONCONSULTA")) { //otra validación
+                $codigo = "POSTULACIONCONSULTA";
                 $mensaje = "No tiene permisos para la operaci&oacute;n.";
                 return view('sistema.pagina-error', compact('titulo', 'codigo', 'mensaje'));
             } else {
