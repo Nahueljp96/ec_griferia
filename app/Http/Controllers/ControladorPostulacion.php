@@ -153,7 +153,7 @@ class ControladorPostulacion extends Controller
         //pregunta si el usuario esta autentificado
         if (Usuario::autenticado() == true) {
             
-            if (!Patente::autorizarOperacion("MENUMODIFICACION")) {
+            if (!Patente::autorizarOperacion("POSTULACIONMODIFICACION")) {
                 $codigo = "POSTULACIONMODIFICACION";
                 $mensaje = "No tiene pemisos para la operaci&oacute;n.";
                 return view('sistema.pagina-error', compact('titulo', 'codigo', 'mensaje'));
@@ -173,7 +173,7 @@ class ControladorPostulacion extends Controller
         $id = $request->input("id");
 
         if (Usuario::autenticado() == true) {
-            if (Patente::autorizarOperacion("MENUELIMINAR")) {
+            if (Patente::autorizarOperacion("POSTULACIONELIMINAR")) {
 
                 $entidad = new Postulacion();
                 $entidad->cargarDesdeRequest($request);

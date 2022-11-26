@@ -83,7 +83,7 @@ class ControladorEstado extends Controller
         
         try {
             //Define la entidad servicio
-            $titulo = "Modificar Pedido";
+            $titulo = "Modificar Estado";
             $entidad = new Estado ();
             $entidad->cargarDesdeRequest($request);
 

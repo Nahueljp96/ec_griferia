@@ -86,7 +86,7 @@ class ControladorSucursal extends Controller
         
         try {
             //Define la entidad servicio
-            $titulo = "Modificar Pedido";
+            $titulo = "Modificar Sucursal";
             $entidad = new Sucursal ();
             $entidad->cargarDesdeRequest($request);
 
@@ -135,7 +135,7 @@ class ControladorSucursal extends Controller
         $titulo = "Modificar Sucursal";
         //pregunta si el usuario esta autentificado
         if (Usuario::autenticado() == true) {
-            if (!Patente::autorizarOperacion("MENUMODIFICACION")) {
+            if (!Patente::autorizarOperacion("SUCURSALMODIFICACION")) {
                 $codigo = "SUCURSALMODIFICACION";
                 $mensaje = "No tiene pemisos para la operaci&oacute;n.";
                 return view('sistema.pagina-error', compact('titulo', 'codigo', 'mensaje'));
@@ -157,7 +157,7 @@ class ControladorSucursal extends Controller
         $id = $request->input('id');
 
         if (Usuario::autenticado() == true) {
-            if (Patente::autorizarOperacion("MENUELIMINAR")) {
+            if (Patente::autorizarOperacion("SUCURSALELIMINAR")) {
 
                 $entidad = new Sucursal();
                 $entidad->cargarDesdeRequest($request);
