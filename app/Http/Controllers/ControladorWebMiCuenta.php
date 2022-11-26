@@ -6,10 +6,10 @@ use App\Entidades\Sistema\Patente;
 use App\Entidades\Sistema\Usuario;
 use Session;
 
-class ControladorWebHome extends Controller
+class ControladorWebMiCuenta extends Controller
 {
     public function index()
     {
-            return view("web.inicio");
+            return view("web.mi-cuenta");
     }
 }
