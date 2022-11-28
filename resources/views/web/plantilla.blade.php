@@ -40,6 +40,11 @@
       <img src="web/images/hero-bg.jpg" alt="">
     </div>
     @endif
+    @if(isset($pg)&& $pg!="home")
+    <div class="bg-box">
+      <img src="web/images/black.jpg" alt="">
+    </div>
+    @endif
     <!-- header section strats -->
     <header class="header_section">
       <div class="container">
@@ -54,7 +59,7 @@
             <span class=""> </span>
           </button>
           
-          <div class="collapse navbar-collapse " id="navbarSupportedContent">
+          <div class="collapse navbar-collapse " id="navbarSupportedContent" id="#menu">
             <ul class="navbar-nav  mx-auto ">
               <li class="nav-item active">
                 <a class="nav-link" href="/">Inicio</a>
@@ -69,7 +74,7 @@
                 <a class="nav-link" href="/contacto">Contacto</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="/micuenta ">Mi Cuenta</a>
+                <a class="nav-link" href="/mi-cuenta ">Mi Cuenta</a>
               </li>
             </ul>
             <div class="user_option">
@@ -135,8 +140,8 @@
                   <i class="fa fa-search" aria-hidden="true"></i>
                 </button>
               </form>
-              <a href="" class="order_online">
-                Order Online
+              <a href="/login" class="order_online">
+                Ingresar
               </a>
             </div>
           </div>

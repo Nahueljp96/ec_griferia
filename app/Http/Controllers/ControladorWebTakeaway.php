@@ -10,8 +10,9 @@ require app_path() . '/start/constants.php';
 class ControladorWebTakeaway extends Controller
 {
     public function index()
-    {
-            return view("web.takeaway");
+    {       
+            $pg= "takeaway";
+            return view("web.takeaway", compact("pg"));
     }
 
     public function cargarGrilla()
