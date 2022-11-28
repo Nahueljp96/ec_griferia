@@ -35,9 +35,11 @@
 <body>
 
   <div class="hero_area">
+    @if(isset($pg)&& $pg=="home")
     <div class="bg-box">
       <img src="web/images/hero-bg.jpg" alt="">
     </div>
+    @endif
     <!-- header section strats -->
     <header class="header_section">
       <div class="container">
@@ -51,8 +53,8 @@
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class=""> </span>
           </button>
-
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          
+          <div class="collapse navbar-collapse " id="navbarSupportedContent">
             <ul class="navbar-nav  mx-auto ">
               <li class="nav-item active">
                 <a class="nav-link" href="/">Inicio</a>
@@ -138,9 +140,11 @@
               </a>
             </div>
           </div>
+          
         </nav>
       </div>
     </header>
+   
     <!-- end header section -->
     @yield('contenido')
 

@@ -10,6 +10,7 @@ class ControladorWebHome extends Controller
 {
     public function index()
     {
-            return view("web.inicio");
+            $pg= "home";
+            return view("web.inicio", compact ('pg'));
     }
 }
