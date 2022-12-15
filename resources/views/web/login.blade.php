@@ -4,11 +4,11 @@
 <section class="book_section layout_padding-bottom">
       <div class="container">
       <div class=" mx-auto mt-5">
-      <div class="">Ingresar</div>
+      <div class="heading_container">Ingresar</div>
       <div class="card-body">
       
             <form name="fr" class="form_container" method="POST">
-            
+            <input type="hidden" name="_token" value="{{ csrf_token() }}">
             <div class="form-group">
             <div class="col-6">
                   <label for="txtUsuario">Usuario</label>

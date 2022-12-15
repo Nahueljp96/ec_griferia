@@ -135,8 +135,8 @@ class ControladorSucursal extends Controller
         $titulo = "Modificar Sucursal";
         //pregunta si el usuario esta autentificado
         if (Usuario::autenticado() == true) {
-            if (!Patente::autorizarOperacion("SUCURSALMODIFICACION")) {
-                $codigo = "SUCURSALMODIFICACION";
+            if (!Patente::autorizarOperacion("SUCURSALEDITAR")) {
+                $codigo = "SUCURSALEDITAR";
                 $mensaje = "No tiene pemisos para la operaci&oacute;n.";
                 return view('sistema.pagina-error', compact('titulo', 'codigo', 'mensaje'));
             } else {

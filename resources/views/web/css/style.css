@@ -101,7 +101,10 @@ a:focus {
       -ms-flex-direction: column;
           flex-direction: column;
 }
-
+.text-bg-dark {
+  color: #fff!important;
+  background-color: RGBA(33,37,41,var(--bs-bg-opacity,1))!important;
+}
 .bg-box {
   position: absolute;
   top: 0;
@@ -140,11 +143,15 @@ a:focus {
 
 .header_section {
   padding: 15px 0;
+  color: #fff!important;
+  background-color: black!important;
 }
 
 .header_section .container-fluid {
   padding-right: 25px;
   padding-left: 25px;
+  color: #fff!important;
+  background-color: black!important;
 }
 
 .navbar-brand {

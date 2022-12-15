@@ -105,7 +105,7 @@ protected $table = 'productos';
     public function obtenerTodos()
     {
         $sql = "SELECT
-                A.idproducto
+                A.idproducto,
                 A.nombre,
                 A.cantidad,
                 A.precio,

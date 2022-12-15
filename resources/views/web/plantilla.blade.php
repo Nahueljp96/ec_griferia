@@ -40,11 +40,6 @@
       <img src="web/images/hero-bg.jpg" alt="">
     </div>
     @endif
-    @if(isset($pg)&& $pg!="home")
-    <div class="bg-box">
-      <img src="web/images/black.jpg" alt="">
-    </div>
-    @endif
     <!-- header section strats -->
     <header class="header_section">
       <div class="container">
@@ -59,7 +54,7 @@
             <span class=""> </span>
           </button>
           
-          <div class="collapse navbar-collapse " id="navbarSupportedContent" id="#menu">
+          <div class="collapse navbar-collapse text-bg-dark" id="navbarSupportedContent">
             <ul class="navbar-nav  mx-auto ">
               <li class="nav-item active">
                 <a class="nav-link" href="/">Inicio</a>
@@ -158,76 +153,49 @@
   <footer class="footer_section">
     <div class="container">
       <div class="row">
-        <div class="col-md-4 footer-col">
+        <div class="col-12 ">
+          <h5 class="pb-5">
+            Sucursales!
+          </h5>  
+        </div>
+        @foreach($aSucursales as $sucursal)
+        <div class="col-3 footer-col">
           <div class="footer_contact">
             <h4>
-              Contact Us
+              {{$sucursal->nombre}}
             </h4>
             <div class="contact_link_box">
-              <a href="">
-                <i class="fa fa-map-marker" aria-hidden="true"></i>
-                <span>
-                  Location
-                </span>
-              </a>
-              <a href="">
+              <a target="_blank" href="">
                 <i class="fa fa-phone" aria-hidden="true"></i>
                 <span>
-                  Call +01 1234567890
+                  Telefono: {{$sucursal->telefono}}
                 </span>
               </a>
-              <a href="">
-                <i class="fa fa-envelope" aria-hidden="true"></i>
+              <a target="_blank" href="">
+                <i class="fa fa-map-marker" aria-hidden="true"></i>
                 <span>
-                  demo@gmail.com
+                  Dirección: {{$sucursal->direccion}}
                 </span>
-              </a>
-            </div>
+              </a>      
+              <a target="_blank" href="">
+                <i class="fa fa-map-marker" aria-hidden="true"></i>
+                <span>
+                  Linkmapa: {{$sucursal->linkmapa}}
+                </span>
+              </a>      
+            </div> 
           </div>
         </div>
-        <div class="col-md-4 footer-col">
-          <div class="footer_detail">
-            <a href="" class="footer-logo">
-              Feane
-            </a>
-            <p>
-              Necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with
-            </p>
-            <div class="footer_social">
-              <a href="">
-                <i class="fa fa-facebook" aria-hidden="true"></i>
-              </a>
-              <a href="">
-                <i class="fa fa-twitter" aria-hidden="true"></i>
-              </a>
-              <a href="">
-                <i class="fa fa-linkedin" aria-hidden="true"></i>
-              </a>
-              <a href="">
-                <i class="fa fa-instagram" aria-hidden="true"></i>
-              </a>
-              <a href="">
-                <i class="fa fa-pinterest" aria-hidden="true"></i>
-              </a>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-4 footer-col">
-          <h4>
-            Opening Hours
-          </h4>
-          <p>
-            Everyday
-          </p>
-          <p>
-            10.00 Am -10.00 Pm
-          </p>
-        </div>
-      </div>
-      <div class="footer-info">
+        @endforeach 
+      </div>   
+        
+        
+        
+       
+      <div class="footer-info">   
         <p>
           &copy; <span id="displayYear"></span> All Rights Reserved By
-          <a href="https://html.design/">Free Html Templates</a><br><br>
+          <a href="https://html.design/">Nahuel_Tecno</a><br><br>
           &copy; <span id="displayYear"></span> Distributed By
           <a href="https://themewagon.com/" target="_blank">ThemeWagon</a>
         </p>

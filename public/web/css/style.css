@@ -140,6 +140,8 @@ a:focus {
 
 .header_section {
   padding: 15px 0;
+  color: #fff!important;
+  background-color: black!important;
 }
 
 .header_section .container-fluid {
