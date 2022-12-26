@@ -159,8 +159,8 @@ class ControladorPedido extends Controller
         
         //pregunta si el usuario esta autentificado
         if (Usuario::autenticado() == true) {
-            if (!Patente::autorizarOperacion("PEDIDOMODIFICACION")) {
-                $codigo = "PEDIDOMODIFICACION";
+            if (!Patente::autorizarOperacion("PEDIDOEDITAR")) {
+                $codigo = "PEDIDOEDITAR";
                 $mensaje = "No tiene pemisos para la operaci&oacute;n.";
                 return view('sistema.pagina-error', compact('titulo', 'codigo', 'mensaje'));
             } else {

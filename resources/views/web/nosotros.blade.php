@@ -96,12 +96,16 @@
       <div class="row">
         <div class="col-md-6">
           <div class="form_container">
-            <form action="" enctype="multipart/form-data">
+            <form method="POST"  action="" enctype="multipart/form-data">
+              <input type="hidden" name="_token" value="{{ csrf_token() }}">  
               <div>
-                <input type="text" class="form-control" placeholder="Nombre y Apellido" name="txtNombre" />
+                <input type="text" class="form-control" placeholder="Nombre" name="txtNombre" />
               </div>
               <div>
-                <input type="text" class="form-control" placeholder="Telefono" name="txtTelefono" />
+                <input type="text" class="form-control" placeholder="Apellido" name="txtApellido" />
+              </div>
+              <div>
+                <input type="text" class="form-control" placeholder="Celular" name="txtCelular" />
               </div>
               <div>
                 <input type="email" class="form-control" placeholder="Correo" name="txtEmail" />
@@ -115,7 +119,7 @@
               </div>
               
               <div class="btn_box text-center">
-                <button>
+                <button type="submit">
                   ENVIAR
                 </button>
               </div>

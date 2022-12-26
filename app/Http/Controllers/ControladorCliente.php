@@ -130,8 +130,8 @@ class ControladorCliente extends Controller
         //pregunta si el usuario esta autentificado
         if (Usuario::autenticado() == true) {
             
-            if (!Patente::autorizarOperacion("CLIENTEODIFICACION")) {
-                $codigo = "CLIENTEODIFICACION";
+            if (!Patente::autorizarOperacion("CLIENTEEDITAR")) {
+                $codigo = "CLIENTEEDITAR";
                 $mensaje = "No tiene pemisos para la operaci&oacute;n.";
                 return view('sistema.pagina-error', compact('titulo', 'codigo', 'mensaje'));
             } else {

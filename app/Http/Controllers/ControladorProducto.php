@@ -153,8 +153,8 @@ class ControladorProducto extends Controller
         $titulo = "Modificar Producto";
         //pregunta si el usuario esta autentificado
         if (Usuario::autenticado() == true) {
-            if (!Patente::autorizarOperacion("PRODUCTOMODIFICACION")) {
-                $codigo = "PRODUCTOMODIFICACION";
+            if (!Patente::autorizarOperacion("PRODUCTOEDITAR")) {
+                $codigo = "PRODUCTOEDITAR";
                 $mensaje = "No tiene pemisos para la operaci&oacute;n.";
                 return view('sistema.pagina-error', compact('titulo', 'codigo', 'mensaje'));
             } else {

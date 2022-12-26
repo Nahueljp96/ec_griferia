@@ -23,7 +23,9 @@
   <!-- nice select  -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/css/nice-select.min.css" integrity="sha512-CruCP+TD3yXzlvvijET8wV5WxxEh5H8P4cmz0RFbKK6FlZ2sYl3AEsKlLPHbniXKSrDdFewhbmBK5skbdsASbQ==" crossorigin="anonymous" />
   <!-- font awesome style -->
-  <link href="web/css/font-awesome.min.css" rel="stylesheet" />
+  <link href="web/fontawesome/css/all.min.css" rel="stylesheet" />
+  <link href="web/fontawesome/css/fontawesome.min.css" rel="stylesheet" />
+  
 
   <!-- Custom styles for this template -->
   <link href="web/css/style.css" rel="stylesheet" />
@@ -220,10 +222,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/js/jquery.nice-select.min.js"></script>
   <!-- custom js -->
   <script src="web/js/custom.js"></script>
-  <!-- Google Map -->
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCh39n5U-4IoWpsVGUHWdqB6puEkhRLdmI&callback=myMap">
-  </script>
-  <!-- End Google Map -->
+
 
 </body>
 

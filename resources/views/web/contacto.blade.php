@@ -7,21 +7,30 @@
     <div class="container">
       <div class="heading_container">
         <h2>
-          Book A Table
+          Contactanos!
         </h2>
       </div>
       <div class="row">
         <div class="col-md-6">
           <div class="form_container">
             <form action="" method="post" enctype="multipart/form-data">
+              @csrf
+              <input type="hidden" name="_token" value="{{ csrf_token() }}">
+              
               <div>
-                <input type="text" class="form-control" placeholder="Nombre y Apellido" />
+                <input type="text" class="form-control" name="txtNombre" placeholder="Nombre" />
               </div>
               <div>
-                <input type="text" class="form-control" placeholder="Telefono" />
+                <input type="text" class="form-control"name="txtApellido" placeholder="Apellido" />
               </div>
               <div>
-                <input type="email" class="form-control" placeholder="Correo" />
+                <input type="text" class="form-control"name="txtTelefono" placeholder="Telefono" />
+              </div>
+              <div>
+                <input type="email" class="form-control"name="txtCorreo" placeholder="Correo" />
+              </div>
+              <div>
+                <textarea name="txtMensaje" id="txtMensaje" class="form-control" placeholder="Mensaje:"></textarea>
               </div>
               
               
