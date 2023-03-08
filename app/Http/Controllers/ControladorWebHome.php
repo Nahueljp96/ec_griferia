@@ -17,3 +17,6 @@ class ControladorWebHome extends Controller
             return view("web.inicio", compact ('pg', 'aSucursales'));
     }
 }
+
+
+?>

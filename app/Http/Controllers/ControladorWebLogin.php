@@ -20,6 +20,10 @@ class ControladorWebLogin extends Controller
     }
 
     public function ingresar(Request $request){
+
+        $sucursal = new Sucursal();
+        $aSucursales = $sucursal->obtenerTodos();
+
         $correo = $request->input('txtCorreo');
         $clave = $request->input('txtClave');
 
@@ -29,9 +33,10 @@ class ControladorWebLogin extends Controller
         $cliente->obtenerPorCorreo($correo);
         
         if($cliente->idcliente > 0 && password_verify($clave, $cliente->clave)){
+            
             $cliente->obtenerPorId ($cliente->idcliente);
             Session::put("idcliente", $cliente->idcliente);
-            return redirect("/mi-cuenta");
+            return view("web.mi-cuenta", compact ('cliente', 'aSucursales'));
         }else {
             $msg= "Usuario o clave incorrecto";
             $sucursal = new Sucursal();
@@ -43,3 +48,6 @@ class ControladorWebLogin extends Controller
         
     }
 }
+
+
+?> 

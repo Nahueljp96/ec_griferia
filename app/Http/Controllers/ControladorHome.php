@@ -26,3 +26,5 @@ class ControladorHome extends Controller
     }
 
 }
+
+?>

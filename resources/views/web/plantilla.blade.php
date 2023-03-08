@@ -86,14 +86,17 @@
                   <i class="fa fa-search" aria-hidden="true"></i>
                 </button>
               </form>
-              @if(Session::get("idcliente")>0):
-              <a href="/login" class="order_online">
-                salir
-              </a>
+              @if(Session::get("idcliente") > 0)
+                <a href="/logout" class="order_online">
+                  salir
+                  <i class="fa fa-user" aria-hidden="true"></i>
+                </a>
               @else
                 <a href="/login" class="order_online">
                   Ingresar
+                  <i class="fa fa-user" aria-hidden="true"></i>
                 </a>
+                
               @endif
             </div>
           </div>

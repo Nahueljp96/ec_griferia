@@ -13,9 +13,7 @@
             <div class="form_container">
 
                   <div>
-                        @foreach ($aClientes as $cliente)
-                        <h5>{{$cliente->nombre}}</h5>
-                        @endforeach
+                       
                   </div>
                   
                   <button type="submit">

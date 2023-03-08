@@ -20,3 +20,5 @@ class ControladorWebMiCuenta extends Controller
             return view("web.mi-cuenta", compact('aSucursales', 'aClientes' ,'cliente'));
     }
 }
+
+?>
