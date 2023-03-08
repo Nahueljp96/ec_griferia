@@ -40,7 +40,7 @@
                   </div>
                   <div class="row">
                         <div class="col-4">
-                        <button class="btn btn-primary c" type="submit">Entrar</button>
+                              <button class="btn btn-primary c" type="submit">Entrar</button>
                         </div>
                         <div class="col-4">
                               <a class="" href="/nuevo-registro">¿No tienes cuenta? Registrarme</a>

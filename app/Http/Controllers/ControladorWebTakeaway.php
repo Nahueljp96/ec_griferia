@@ -60,4 +60,8 @@ class ControladorWebTakeaway extends Controller
         );
         return json_encode($json_data);
     }
+    
+    public function cargarCarrito(){
+
+    }
 }
