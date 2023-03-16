@@ -67,6 +67,7 @@ class ControladorCliente extends Controller
             $row[] = $aClientes[$i]->correo;
             $row[] = $aClientes[$i]->dni;
             $row[] = $aClientes[$i]->celular;
+            $row[] = $aClientes[$i]->direccion;
             $cont++;
             $data[] = $row;
         }

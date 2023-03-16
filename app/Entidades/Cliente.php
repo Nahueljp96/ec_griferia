@@ -17,6 +17,7 @@ protected $table = 'clientes';
             'correo',
             'dni',
             'celular',
+            'direccion',
             'clave'
       ];
       protected $hidden = [
@@ -30,41 +31,58 @@ protected $table = 'clientes';
         $this->correo = $request->input('txtCorreo');
         $this->dni = $request->input('txtDni');
         $this->celular = $request->input('txtCelular');
-        $this->clave = passsword_hash($request->input('txtClave'), PASSWORD_DEFAULT);
+        $this->direccion =$request->input('txtDireccion');
+        $this->clave = password_hash($request->input('txtClave'), PASSWORD_DEFAULT);
       }
       
       public function insertar()
       {
           $sql = "INSERT INTO $this->table (
-                  nombre,
+                  nombre, 
                   apellido,
                   correo,
                   dni,
                   celular,
+                  direccion,
                   clave
-              ) VALUES (?, ?, ?, ?, ?, ?);";
+              ) VALUES (?, ?, ?, ?, ?, ?,?);";
           $result = DB::insert($sql, [
               $this->nombre,
               $this->apellido,
               $this->correo,
               $this->dni,
               $this->celular,
-              $this->clave,
+              $this->direccion,
+              $this->clave
           ]);
           return $this->idcliente = DB::getPdo()->lastInsertId();
       }
 
       public function guardar() {
-        $sql = "UPDATE $this->table SET
-            nombre='$this->nombre',
-            apellido='$this->apellido',
-            correo='$this->correo',
-            dni='$this->dni',
-            celular='$this->celular',
-            clave='$this->clave'
-            
-            WHERE idcliente=?";
-        $affected = DB::update($sql, [$this->idcliente]);
+        if($this->clave != ""){
+            $sql = "UPDATE $this->table SET
+                nombre='$this->nombre',
+                apellido='$this->apellido',
+                correo='$this->correo',
+                dni='$this->dni',
+                celular='$this->celular',
+                direccion='$this->direccion',
+                clave='$this->clave'
+                
+                WHERE idcliente=?";
+            } else{    
+            $sql = "UPDATE $this->table SET
+                nombre='$this->nombre',
+                apellido='$this->apellido',
+                correo='$this->correo',
+                dni='$this->dni',
+                celular='$this->celular',
+                direccion='$this->direccion',
+                clave='$this->clave'
+                
+                WHERE idcliente=?";
+            }
+            $affected = DB::update($sql, [$this->idcliente]);
     }
     
     public function eliminar()
@@ -82,6 +100,7 @@ protected $table = 'clientes';
                 correo,
                 dni,
                 celular,
+                direccion,
                 clave
                 FROM $this->table WHERE idcliente = $idcliente";
         $lstRetorno = DB::select($sql);
@@ -93,6 +112,7 @@ protected $table = 'clientes';
             $this->correo = $lstRetorno[0]->correo;
             $this->dni = $lstRetorno[0]->dni;
             $this->celular = $lstRetorno[0]->celular;
+            $this->direccion =$lstRetorno[0]->direccion;
             $this->clave = $lstRetorno[0]->clave;
             return $this;
         }
@@ -108,6 +128,7 @@ protected $table = 'clientes';
                 A.correo,
                 A.dni,
                 A.celular,
+                A.direccion,
                 A.clave
                 FROM $this->table A ORDER BY A.nombre";
         $lstRetorno = DB::select($sql);
@@ -123,7 +144,8 @@ protected $table = 'clientes';
             2=>  'A.apellido',
             3 => 'A.dni',
             4 => 'A.correo',
-            5 => 'A.celular',
+            5 => 'A.direccion',
+            6 => 'A.celular',
         );
         #El A. hace que le agregue un alias, es decir A referencia a la tabla clientes
         $sql = "SELECT DISTINCT  
@@ -133,6 +155,7 @@ protected $table = 'clientes';
                     A.correo,
                     A.dni,
                     A.celular,
+                    A.direccion,
                     A.clave
                     FROM clientes A
                 WHERE 1=1
@@ -144,6 +167,7 @@ protected $table = 'clientes';
             $sql .= " OR A.apellido LIKE '%" . $request['search']['value'] . "%' ";
             $sql .= " OR A.documento LIKE '%" . $request['search']['value'] . "%' ";
             $sql .= " OR A.correo LIKE '%" . $request['search']['value'] . "%' ";
+            $sql .= " OR A.direccion LIKE '%" . $request['search']['value'] . "%' ";
             $sql .= " OR A.celular LIKE '%" . $request['search']['value'] . "%' )";
         }
         $sql .= " ORDER BY " . $columns[$request['order'][0]['column']] . "   " . $request['order'][0]['dir']; //forma de ordenarlo

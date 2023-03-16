@@ -72,8 +72,12 @@ if (isset($msg)) {
                     <input type="text" id="txtDni" name="txtDni" class="form-control" value="{{ $cliente->dni }}" required>
                 </div> 
                 <div class="form-group col-lg-6">
+                <label>Direccion: *</label>
+                    <input type="text" id="txtDireccion" name="txtDireccion" class="form-control" value="{{ $cliente->direccion }}" required>
+                </div> 
+                <div class="form-group col-lg-6">
                 <label>Clave: *</label>
-                    <input type="text" id="txtClave" name="txtClave" class="form-control" value="" required >
+                    <input type="text" id="txtClave" name="txtClave" class="form-control" value=""  >
                 </div> 
             </div>
       </form>           

@@ -10,7 +10,7 @@ use App\Entidades\Cliente;
 use App\Entidades\Pedido;
 use Iluminate\Http\Request;
 
-class ControladorWebMiCuenta extends Controller
+class ControladorWebCambiarDatos extends Controller
 {
     public function index()
     {
@@ -24,7 +24,7 @@ class ControladorWebMiCuenta extends Controller
                 $cliente = new Cliente();
             }
 
-            return view("web.mi-cuenta", compact('aSucursales','cliente'));
+            return view("web.cambiar-datos", compact('aSucursales','cliente'));
     }
 }
 
