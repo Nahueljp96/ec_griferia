@@ -18,18 +18,23 @@
               <input type="hidden" name="_token" value="{{ csrf_token() }}">
               
               <div>
+                  <label for="">Nombre:</label>
                 <input type="text" class="form-control" name="txtNombre" placeholder="{{$cliente->nombre}}" />
               </div>
               <div>
+                  <label for="">Apellido:</label>
                 <input type="text" class="form-control"name="txtApellido" placeholder="{{$cliente->apellido}}" />
               </div>
               <div>
+                  <label for="">Telefono:</label>
                 <input type="text" class="form-control"name="txtTelefono" placeholder="{{$cliente->celular}}" />
               </div>
               <div>
+                  <label for="">Correo:</label>
                 <input type="email" class="form-control"name="txtCorreo" placeholder="{{$cliente->correo}}" />
               </div>
               <div>
+                  <label for="">Direccion:</label>
                 <input type="text" class="form-control"name="txtDireccion" placeholder="{{$cliente->direccion}}" />
               </div>
               
