@@ -1,10 +1,13 @@
 @extends('plantilla')
 @section('titulo', "$titulo")
 @section('scripts')
+{{-- linea 7 prueba tincho testear!!!!!!!!!!!!! --}}
 <script>
     globalId = '<?php echo isset($postulacion->idpostulacion) && $postulacion->idpostulacion > 0 ? $postulacion->idpostulacion : 0; ?>';
+    globalCv = '<?php echo isset($postulacion->curriculum) && $postulacion->curriculum  ? $postulacion->curriculum : 0; ?>';
     <?php $globalId = isset($postulacion->idpostulacion) ? $postulacion->idpostulacion : "0";?>
 </script>
+
 @endsection
 @section('breadcrumb')
 <ol class="breadcrumb">
@@ -110,7 +113,7 @@ if (isset($msg)) {
         $.ajax({
             type: "GET",
             url: "{{ asset('admin/postulacion/eliminar') }}",
-            data: { id:globalId },
+            data: { id:globalId , archivo:globalCv },
             async: true,
             dataType: "json",
             success: function (data) {

@@ -8,7 +8,7 @@ use Session;
 use App\Entidades\Sucursal;
 use App\Entidades\Cliente;
 use App\Entidades\Pedido;
-use Iluminate\Http\Request;
+use Illuminate\Http\Request;
 
 class ControladorWebCambiarDatos extends Controller
 {
@@ -25,6 +25,30 @@ class ControladorWebCambiarDatos extends Controller
             }
 
             return view("web.cambiar-datos", compact('aSucursales','cliente'));
+    }
+
+    public function guardar(Request $request){
+
+        $sucursal = new Sucursal();
+        $aSucursales = $sucursal->obtenerTodos();
+
+        $msg = "cambiado correctamente";
+        
+        
+        $nombre = $request->input('txtNombre');
+        $apellido = $request->input('txtApellido');
+        $celular = $request->input('txtCelular');
+        $correo = $request->input('txtCorreo');
+        $direccion = $request->input('txtDireccion');
+
+        $cliente = new Cliente();
+        $cliente->nombre = $nombre;
+        $cliente->apellido = $apellido;
+        $cliente->celular = $celular;
+        $cliente->correo = $correo;
+        $cliente->direccion = $direccion;
+        $cliente->guardar();
+        return view ("web.mi-cuenta", compact('cliente', 'aSucursales'));
     }
 }
 

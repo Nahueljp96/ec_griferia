@@ -28,7 +28,7 @@ protected $table = 'postulaciones';
         $this->apellido = $request->input('txtApellido');
         $this->celular = $request->input('txtCelular');
         $this->correo = $request->input('txtCorreo');
-        $this->curriculum = $request->input('txtCv');
+        $this->curriculum = $request->input('archivo');
         
       }
 

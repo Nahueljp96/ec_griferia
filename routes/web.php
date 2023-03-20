@@ -36,6 +36,7 @@ Route::group(array('domain' => '127.0.0.1'), function () {
     Route::post('/cambiar-clave', 'ControladorWebCambiarClave@guardar');
     Route::get('/logout', 'ControladorWebLogout@logout');
     Route::get('/cambiar-datos', 'ControladorWebCambiarDatos@index');
+    Route::post('/cambiar-datos', 'ControladorWebCambiarDatos@guardar');
  
 
     Route::get('/admin', 'ControladorHome@index');

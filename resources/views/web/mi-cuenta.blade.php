@@ -9,7 +9,24 @@
             </h2>
             @if (Session::get("idcliente") > 0)
             <h3 class="pt-5">
+                  <label for="">Nombre y Apellido:</label>
                   {{$cliente->nombre ." " . $cliente->apellido}}
+            </h3>
+            <h3 class="">
+                  <label for="">Correo:</label>
+                  {{$cliente->correo}}
+            </h3>
+            <h3 class="">
+                  <label for="">Dni:</label>
+                  {{$cliente->dni}}
+            </h3>
+            <h3 class="">
+                  <label for="">Celular:</label>
+                  {{$cliente->celular}}
+            </h3>
+            <h3 class="">
+                  <label for="">Direccion:</label>
+                  {{$cliente->direccion}}
             </h3>
             <div class="pt-5">
             <a href="/cambiar-datos" class="link-warning">

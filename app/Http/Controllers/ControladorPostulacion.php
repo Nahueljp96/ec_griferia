@@ -17,7 +17,7 @@ class ControladorPostulacion extends Controller
         $titulo = "Nueva postulacion";
 
         if (Usuario::autenticado() == true) { //validación
-            if (!Patente::autorizarOperacion("POSTULACIONCONSULTA")) { //otra validación
+            if (!Patente::autorizarOperacion("POSTULACIONALTA")) { //otra validación
                 $codigo = "POSTULACIONCONSULTA";
                 $mensaje = "No tiene permisos para la operaci&oacute;n.";
                 return view('sistema.pagina-error', compact('titulo', 'codigo', 'mensaje'));
@@ -90,9 +90,9 @@ class ControladorPostulacion extends Controller
             $entidad = new Postulacion ();
             $entidad->cargarDesdeRequest($request);
 
-            if ($_FILES["archivo"]["error"] === UPLOAD_ERR_OK) { //Se adjunta imagen
+            if ($_FILES["archivo"]["error"] === UPLOAD_ERR_OK) { //Se adjunta el archivo
                 $extension = pathinfo($_FILES["archivo"]["name"], PATHINFO_EXTENSION);
-                 $nombre = date("Ymdhmsi") . ".$extension";
+                 $nombre = date("Ymdhmsi") . ".$extension"; //ponemos la variable extension para que concatene la extension del archivo subido.
                  $archivo = $_FILES["archivo"]["tmp_name"];
                  move_uploaded_file($archivo, env('APP_PATH') . "/public/files/$nombre"); //guarda el archivo
                  $entidad->curriculum = $nombre;
@@ -106,14 +106,14 @@ class ControladorPostulacion extends Controller
             } else {
                      
                 if ($_POST["id"] > 0) {
-                    $postulacionAux = new Postulacion();
-                    $postulacionAux->obtenerPorId($entidad->idpostulacion);
+                    $postulacionAnt = new Postulacion();
+                    $postulacionAnt->obtenerPorId($entidad->idpostulacion);
 
                     if($_FILES["archivo"]["error"] === UPLOAD_ERR_OK){
-                        //Eliminar imagen anterior
-                        @unlink(env('APP_PATH') . "/public/files/$postulacionAux->imagen");                          
+                        //Eliminar archivo anterior
+                        @unlink(env('APP_PATH') . "/public/files/$postulacionAnt->curriculum");                          
                     } else {
-                        $entidad->curriculum = $postulacionAux->curriculum;
+                        $entidad->curriculum = $postulacionAnt->curriculum;
                     }
 
                     //Es actualizacion
@@ -153,7 +153,7 @@ class ControladorPostulacion extends Controller
         //pregunta si el usuario esta autentificado
         if (Usuario::autenticado() == true) {
             
-            if (!Patente::autorizarOperacion("POSTULACIONMODIFICACION")) {
+            if (!Patente::autorizarOperacion("POSTULACIONEDITAR")) {
                 $codigo = "POSTULACIONMODIFICACION";
                 $mensaje = "No tiene pemisos para la operaci&oacute;n.";
                 return view('sistema.pagina-error', compact('titulo', 'codigo', 'mensaje'));
@@ -169,15 +169,17 @@ class ControladorPostulacion extends Controller
     }
 
     public function eliminar(Request $request)
-    {
+    {           
         $id = $request->input("id");
 
         if (Usuario::autenticado() == true) {
-            if (Patente::autorizarOperacion("POSTULACIONELIMINAR")) {
+            if (Patente::autorizarOperacion("POSTULACIONBAJA")) {
 
                 $entidad = new Postulacion();
                 $entidad->cargarDesdeRequest($request);
-                @unlink(env('APP_PATH') . "/public/files/$entidad->curriculum");
+               // $entidad->obtenerPorId($id);
+                //print_r($entidad); exit;
+                    @unlink(env('APP_PATH') . "/public/files/$entidad->curriculum");
                 $entidad->eliminar();
 
 
@@ -191,6 +193,6 @@ class ControladorPostulacion extends Controller
             return redirect('admin/login');
         }
     }
-
+    
 }
 ?>

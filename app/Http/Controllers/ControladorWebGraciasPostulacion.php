@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 
 class ControladorWebGraciasPostulacion extends Controller
 {
-    public function graciasPostulacion()
+    public function index()
     {
             $sucursal = new Sucursal();
             $aSucursales = $sucursal->obtenerTodos();

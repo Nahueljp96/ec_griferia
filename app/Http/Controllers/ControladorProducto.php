@@ -179,7 +179,8 @@ class ControladorProducto extends Controller
             if (Patente::autorizarOperacion("PRODUCTOELIMINAR")) {
 
                 $entidad = new Producto();
-                $entidad->cargarDesdeRequest($request);
+                //$entidad->cargarDesdeRequest($request); asi hizo profe
+                $entidad->obtenerPorId($id);
                 @unlink(env('APP_PATH') . "/public/files/$entidad->imagen");                          
                 $entidad->eliminar();
 
