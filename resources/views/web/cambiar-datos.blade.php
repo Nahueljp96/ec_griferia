@@ -14,29 +14,39 @@
         <div class="col-md-6">
           <div class="form_container">
             <form action="" method="post" enctype="multipart/form-data">
+              @if(isset($msg))
+                <div class="alert arlet-{{$msg['estado']}}" role="alert">
+                  {{$msg["msg"]}}
+                </div>
+              @endif  
               @csrf
               <input type="hidden" name="_token" value="{{ csrf_token() }}">
               
               <div>
                   <label for="">Nombre:</label>
-                <input type="text" class="form-control" name="txtNombre" placeholder="{{$cliente->nombre}}" />
+                <input type="text" class="form-control" name="txtNombre" placeholder="Nombre" value="{{$cliente->nombre}}" />
               </div>
               <div>
                   <label for="">Apellido:</label>
-                <input type="text" class="form-control"name="txtApellido" placeholder="{{$cliente->apellido}}" />
+                <input type="text" class="form-control"name="txtApellido" placeholder="Apellido" value="{{$cliente->apellido}}" />
+              </div>
+              <div>
+                <label for="">DNI:</label>
+              <input type="text" class="form-control"name="txtDni" placeholder="Dni" value="{{$cliente->dni}}" />
               </div>
               <div>
                   <label for="">Telefono:</label>
-                <input type="text" class="form-control"name="txtTelefono" placeholder="{{$cliente->celular}}" />
+                <input type="text" class="form-control"name="txtCelular" placeholder="Telefono" value="{{$cliente->celular}}" />
               </div>
               <div>
                   <label for="">Correo:</label>
-                <input type="email" class="form-control"name="txtCorreo" placeholder="{{$cliente->correo}}" />
+                <input type="email" class="form-control"name="txtCorreo" placeholder="Correo"  value="{{$cliente->correo}}"/>
               </div>
               <div>
                   <label for="">Direccion:</label>
-                <input type="text" class="form-control"name="txtDireccion" placeholder="{{$cliente->direccion}}" />
+                <input type="text" class="form-control"name="txtDireccion" placeholder="Direccion" value="{{$cliente->direccion}}" />
               </div>
+              
               
               
               

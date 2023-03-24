@@ -33,7 +33,7 @@ class ControladorWebLogin extends Controller
         $cliente->obtenerPorCorreo($correo);
         
         if($cliente->idcliente > 0 && password_verify($clave, $cliente->clave)){
-            
+            //NOTA: Solo va a poder loguearse si la passwd esta encriptada.
             $cliente->obtenerPorId ($cliente->idcliente);
             Session::put("idcliente", $cliente->idcliente);
             return view("web.mi-cuenta", compact ('cliente', 'aSucursales'));

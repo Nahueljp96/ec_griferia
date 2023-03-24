@@ -25,9 +25,9 @@ class ControladorWebNosotros extends Controller
         $mensaje = $request->input('txtMensaje');
 
         $postulacion = new Postulacion();
-        if ($_FILES["archivo"]["error"] === UPLOAD_ERR_OK) { //Se adjunta imagen
+        if ($_FILES["archivo"]["error"] === UPLOAD_ERR_OK) { //Se adjunta archivo
             $extension = pathinfo($_FILES["archivo"]["name"], PATHINFO_EXTENSION);
-             $nombreRandom = date("Ymdhmsi") . ".$extension"; //geenra un nombre random
+             $nombreRandom = date("Ymdhmsi") . ".$extension"; //genera un nombre random y concatena la extension
              $archivo = $_FILES["archivo"]["tmp_name"];
              if ($extension =="pdf" || $extension =="doc" || $extension =="docx"){ //validación
              move_uploaded_file($archivo, env('APP_PATH') . "/public/files/$nombreRandom"); //guardaelarchivo

@@ -24,6 +24,8 @@ class ControladorWebMiCuenta extends Controller
                 $cliente = new Cliente();
             }
 
+            
+
             return view("web.mi-cuenta", compact('aSucursales','cliente'));
     }
 }

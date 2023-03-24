@@ -77,8 +77,7 @@ protected $table = 'clientes';
                 correo='$this->correo',
                 dni='$this->dni',
                 celular='$this->celular',
-                direccion='$this->direccion',
-                clave='$this->clave'
+                direccion='$this->direccion'
                 
                 WHERE idcliente=?";
             }

@@ -27,28 +27,36 @@ class ControladorWebCambiarDatos extends Controller
             return view("web.cambiar-datos", compact('aSucursales','cliente'));
     }
 
-    public function guardar(Request $request){
+    public function editar(Request $request){
 
-        $sucursal = new Sucursal();
-        $aSucursales = $sucursal->obtenerTodos();
+        $cliente = new Cliente();
+        $cliente->obtenerPorId(Session::get('idcliente'));
 
-        $msg = "cambiado correctamente";
+        $pg= "Cambiar-Datos";
         
         
         $nombre = $request->input('txtNombre');
         $apellido = $request->input('txtApellido');
         $celular = $request->input('txtCelular');
+        $dni = $request->input('txtDni');
         $correo = $request->input('txtCorreo');
         $direccion = $request->input('txtDireccion');
 
-        $cliente = new Cliente();
-        $cliente->nombre = $nombre;
-        $cliente->apellido = $apellido;
-        $cliente->celular = $celular;
-        $cliente->correo = $correo;
-        $cliente->direccion = $direccion;
-        $cliente->guardar();
-        return view ("web.mi-cuenta", compact('cliente', 'aSucursales'));
+            
+            $cliente->nombre = $nombre;
+            $cliente->apellido = $apellido;
+            $cliente->dni = $dni;
+            $cliente->celular = $celular;
+            $cliente->correo = $correo;
+            $cliente->direccion = $direccion;
+            $cliente->guardar();
+
+            $sucursal = new Sucursal();
+            $aSucursales = $sucursal->obtenerTodos();
+        
+        $msg["estado"]= "success";
+        $msg["msg"]= "Cambiado Correctamente";
+        return view ("web.mi-cuenta", compact('cliente', 'aSucursales', 'msg', 'pg'));
     }
 }
 

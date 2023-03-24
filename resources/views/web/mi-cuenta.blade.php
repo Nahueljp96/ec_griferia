@@ -3,10 +3,18 @@
 @section('contenido')
 
       <div class="container">
+         
             <div class="heading_container">
+                 
             <h2 class="">
             Mi Cuenta:
             </h2>
+                  @if(isset ($msg))
+                              <div class="alert alert-{{ $msg['estado']}}" role="alert">
+                                    {{$msg["msg"]}}
+                              </div>
+                  @endif
+
             @if (Session::get("idcliente") > 0)
             <h3 class="pt-5">
                   <label for="">Nombre y Apellido:</label>
@@ -29,10 +37,13 @@
                   {{$cliente->direccion}}
             </h3>
             <div class="pt-5">
-            <a href="/cambiar-datos" class="link-warning">
-                  Editar Datos
-                  <i class="fa fa-user" aria-hidden="true"></i>
-            <a>
+                  <label for="" class="a.order_online">
+                  <a href="/cambiar-datos" class="order_online">
+                        Editar Datos
+                        <i class="fa fa-user" aria-hidden="true"></i>
+                  <a>
+                  </label>
+                    
             </div>      
             @else
 
