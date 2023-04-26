@@ -78,7 +78,7 @@
               <a href="" class="user_link">
                 <i class="fa fa-user" aria-hidden="true"></i>
               </a>
-              <a class="cart_link" href="#">
+              <a class="cart_link" href="/carrito">
                 <i class="fa-solid fa-cart-shopping "></i>
               </a>
               <form class="form-inline">

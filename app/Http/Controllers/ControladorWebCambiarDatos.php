@@ -33,8 +33,7 @@ class ControladorWebCambiarDatos extends Controller
         $cliente->obtenerPorId(Session::get('idcliente'));
 
         $pg= "Cambiar-Datos";
-        
-        
+         
         $nombre = $request->input('txtNombre');
         $apellido = $request->input('txtApellido');
         $celular = $request->input('txtCelular');

@@ -8,6 +8,14 @@
         <h2>
           Take away
         </h2>
+        <h3> <!-- mejor forma de poner lo de la variable msg -->
+          
+          @if(isset($msg) && isset($msg['estado'])) 
+              <div class="alert alert-{{ $msg['estado']}}" role="alert">
+                  {{$msg["msg"]}}
+              </div>
+          @endif
+        </h3>
       </div>
 
       <ul class="filters_menu">
@@ -44,9 +52,11 @@
                       {{$producto->precio}}
                     </h6>
                     <form action="" method="POST">
+                      @csrf
                       <div class="btn selectCant" style="backgroud: #f1f2f3; border-radius: 20px;margin-top: 2px;padding-bottom: 4px;padding-top:4px;">
                         <input type="hidden" name="txtIdProducto" value="{{ $producto->idproducto}}">
-                        <input type="number" name="txtCantidadProducto" id="" class="txt-center" style="border: 0;outline: none; background-color: #f1f2f3; cursor: pointer;">
+                        
+                        <input type="number" name="txtCantidadProducto" value="1">
                       </div>
                       <button type="submit"><i class="fa-solid fa-cart-shopping"></i></button>
                     </form>

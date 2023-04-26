@@ -60,9 +60,12 @@ if (isset($msg)) {
                     <label>Cliente: *</label>
                     <select class="form-control" name="lstCliente" id="lstCliente" required>
                             <option selected="" disabled value="">Seleccionar</option>
-                            @foreach($aClientes as $item)
-                                <option value="{{ $item->idcliente}}">{{ $item->nombre}} {{ $item->apellido}}</option>
-                                
+                            @foreach($aClientes as $cliente)
+                            @if($cliente->idcliente == $pedido->fk_idcliente)
+                                <option selected value="{{ $cliente->idcliente}}">{{ $cliente->nombre}} {{ $cliente->apellido}}</option>
+                            @else
+                                <option value="{{ $cliente->idcliente}}">{{ $cliente->nombre}} {{ $cliente->apellido}}</option> 
+                            @endif       
                             @endforeach
                     </select>
                 </div> 
@@ -70,9 +73,12 @@ if (isset($msg)) {
                 <label>Estado: *</label>
                     <select class="form-control" name="lstEstado" id="lstEstado"required>
                         <option selected="" disiabled>Seleccionar</option>
-                        @foreach($aEstados as $item)
-                            <option value="{{ $item->idestado}}">{{ $item->nombre}}</option>
-                                
+                        @foreach($aEstados as $estado)
+                        @if($estado->idestado == $pedido->fk_idestado)
+                            <option selected value="{{ $estado->idestado}}">{{ $estado->nombre}}</option>
+                        @else
+                            <option value="{{ $estado->idestado}}">{{ $estado->nombre}}</option>  
+                        @endif          
                         @endforeach
                     </select>
                 </div> 
@@ -80,11 +86,16 @@ if (isset($msg)) {
                     <label>Sucursal: *</label>
                     <select class="form-control" name="lstSucursal" id="lstSucursal" required>
                         <option disabled selected>Seleccionar</option>
-                            @foreach($aSucursales as $item)
-                                <option value="{{ $item->idsucursal}}">{{ $item->nombre}}</option>
-
+                            @foreach($aSucursales as $sucursal)
+                            @if($sucursal->idsucursal == $pedido->fk_idsucursal)
+                                <option selected value="{{ $sucursal->idsucursal}}">{{ $sucursal->nombre}}</option>
+                            @else
+                                <option  value="{{ $sucursal->idsucursal}}">{{ $sucursal->nombre}}</option> 
+                            @endif   
                             @endforeach
                     </select>
+
+                    
                 </div> 
                  
                 <div class="form-group col-lg-6">

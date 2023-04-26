@@ -38,6 +38,10 @@ Route::group(array('domain' => '127.0.0.1'), function () {
     Route::get('/cambiar-datos', 'ControladorWebCambiarDatos@index');
     Route::post('/cambiar-datos', 'ControladorWebCambiarDatos@editar');
     Route::post('/datos-cambiados', 'ControladorWebDatosCambiados@index');
+    Route::get('/carrito', 'ControladorWebCarrito@index');
+    Route::post('/carrito', 'ControladorWebCarrito@finalizarPedido');
+    
+
  
 
     Route::get('/admin', 'ControladorHome@index');

@@ -166,6 +166,7 @@ class ControladorPedido extends Controller
             } else {
                 $pedido = new Pedido();
                 $pedido->obtenerPorId($id);
+               // print_r($pedido); exit;
 
                 $cliente = new Cliente();
                 $aClientes = $cliente->obtenerTodos();
