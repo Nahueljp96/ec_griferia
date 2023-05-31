@@ -9,7 +9,7 @@ class Carrito_producto extends Model
 {
       protected $table = 'carrito_productos';
       public $timestamps = false;
-      private $producto;
+      public $producto;
 
       protected $fillable= [
             'idcarrito_producto',
@@ -97,11 +97,11 @@ class Carrito_producto extends Model
                     INNER JOIN productos C ON C.idproducto = A.fk_idproducto
                     WHERE B.fk_idcliente = $idcliente";
             $lstRetorno = DB::select($sql);
+
             $aResultado = array();
             if (count($lstRetorno) >0) {
                foreach($lstRetorno as $resultado){        
-                  
-                   $carrito_producto = new Carrito_producto();
+                  $carrito_producto = new Carrito_producto();
                   $carrito_producto->idcarrito_producto = $resultado->idcarrito_producto;
                   $carrito_producto->fk_idproducto = $resultado->fk_idproducto;
                   $carrito_producto->fk_idcarrito = $resultado->fk_idcarrito;

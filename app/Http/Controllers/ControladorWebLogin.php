@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Entidades\Sucursal;
 use Illuminate\Http\Request;
 use App\Entidades\Cliente;
+use App\Entidades\Pedido;
 use Session;
 
 
@@ -32,11 +33,14 @@ class ControladorWebLogin extends Controller
         $cliente = new Cliente();
         $cliente->obtenerPorCorreo($correo);
         
+        $pedido = new Pedido();
+        $aPedidos = $pedido->obtenerPedidosPorCliente(Session::get("idcliente"));
+
         if($cliente->idcliente > 0 && password_verify($clave, $cliente->clave)){
             //NOTA: Solo va a poder loguearse si la passwd esta encriptada.
             $cliente->obtenerPorId ($cliente->idcliente);
             Session::put("idcliente", $cliente->idcliente);
-            return view("web.mi-cuenta", compact ('cliente', 'aSucursales'));
+            return view("web.mi-cuenta", compact ('cliente', 'aSucursales', 'aPedidos'));
         }else {
             $msg= "Usuario o clave incorrecto";
             $sucursal = new Sucursal();

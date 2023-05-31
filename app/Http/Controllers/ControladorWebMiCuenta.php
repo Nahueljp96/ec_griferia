@@ -24,9 +24,10 @@ class ControladorWebMiCuenta extends Controller
                 $cliente = new Cliente();
             }
 
-            
+            $pedido = new Pedido();
+            $aPedidos = $pedido->obtenerPedidosPorCliente(Session::get("idcliente"));
 
-            return view("web.mi-cuenta", compact('aSucursales','cliente'));
+            return view("web.mi-cuenta", compact('aSucursales','cliente', 'aPedidos' ));
     }
 }
 

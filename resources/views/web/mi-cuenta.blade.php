@@ -15,7 +15,7 @@
                                                 {{$msg["msg"]}}
                                           </div>
                               @endif
-                        @if (Session::get("idcliente") > 0)
+                        <h2>
                         <h3 class="pt-3">
                               <label for="">Nombre y Apellido:</label>
                               {{$cliente->nombre ." " . $cliente->apellido}}
@@ -50,15 +50,45 @@
                                     </a>
                               </div>  
                         </h4>    
-                        @else
-
-                        <h3 class="md-10">
-                              Por favor, ingrese para ver su cuenta!!
-                        </h3>
-                        @endif
-
                         </div>
                   </div>
+                  <div class="heading_container">
+                        <div class="card border-light mb-33 col-12">
+                              <div class="card-body">
+                                    <div>
+                                          <h2 class="text-center p-4">Pedidos</h2>
+                                          <table class="table table-striped table-hover border">
+                                                <thead>
+                                                      <tr>
+                                                            <th>Pedido</th>
+                                                            <th>Fecha</th>
+                                                            <th>Descripción</th>
+                                                            <th>Total</th>
+                                                            <th>Sucursal</th>
+                                                            
+                                                            <th>Estado</th>
+                                                            
+                                                      </tr>
+                                                </thead>
+                                                <tbody>
+                                                      @foreach($aPedidos as $pedido)
+                                                      <tr>
+                                                            <td>{{$pedido->idpedido}}</td>
+                                                            <td>{{$pedido->fecha}}</td>
+                                                            <td>{{$pedido->descripcion}}</td>
+                                                            <td>{{$pedido->total}}</td>
+                                                            <td>{{$pedido->sucursal}}</td>
+                                                            <td>{{$pedido->estado}}</td>
+                                                      </tr>
+                                                      @endforeach
+                                                </tbody>
+                                          </table>
+                                    </div>
+
+                              </div>
+
+                        </div>
+                  </div>      
             </div>
      </section>      
 @endsection
