@@ -49,7 +49,7 @@
                   </p>
                   <div class="options">
                     <h6>
-                      {{$producto->precio}}
+                      {{$producto->precio . "$"}}
                     </h6>
                     <form action="" method="POST">
                       @csrf

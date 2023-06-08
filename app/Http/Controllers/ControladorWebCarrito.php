@@ -28,6 +28,7 @@ class ControladorWebCarrito extends Controller
                         $idcarrito=$carrito->idcarrito;
                         $aCarrito_productos = $carrito_producto->obtenerPorCarrito($carrito->idcarrito);
                   }else{
+                        $aCarrito_productos = array();
                         $sucursal =new Sucursal();
                         $aSucursales = $sucursal->obtenerTodos();
 
@@ -63,9 +64,16 @@ class ControladorWebCarrito extends Controller
             $pedido->fk_idestado= PEDIDO_PENDIENTE;
             
             $pedido->insertar();
-            
+
+            //Vaciar el carrito
+            $carrito_producto->eliminarPorCliente(Session::get("idcliente"));
+
+            $carrito = new Carrito();
+            $carrito->eliminarPorCliente(Session::get("idcliente"));
             return redirect('/mi-cuenta')->with('success', 'El pedido se ha procesado correctamente.');
      }
+
+     
 }
 
 

@@ -42,6 +42,8 @@ Route::group(array('domain' => '127.0.0.1'), function () {
     Route::post('/carrito', 'ControladorWebCarrito@finalizarPedido');
     
 
+    
+
  
 
     Route::get('/admin', 'ControladorHome@index');

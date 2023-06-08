@@ -84,9 +84,7 @@
                 <i class="fa-solid fa-cart-shopping "></i>
               </a>
               <form class="form-inline">
-                <button class="btn  my-2 my-sm-0 nav_search-btn" type="submit">
-                  <i class="fa fa-search" aria-hidden="true"></i>
-                </button>
+                
               </form>
               @if(Session::get("idcliente") > 0)
                 <a href="/logout" class="order_online">

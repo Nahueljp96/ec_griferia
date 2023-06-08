@@ -165,25 +165,27 @@ protected $table = 'pedidos';
         return $lstRetorno;
     }
 
-    public function obtenerPedidosPorCliente($idcliente){
-
+    public function obtenerPedidosPorCliente($idcliente) {
+        if (isset($idcliente) && !is_null($idcliente)) {
             $sql = "SELECT
-             A.idpedido,
-             A.fecha,
-             A.descripcion,
-             A.total,
-             A.fk_idsucursal,
-             B.nombre AS sucursal,
-             A.fk_idcliente,
-             A.fk_idestado,
-             C.nombre AS estado   
-             FROM pedidos A
-             INNER JOIN sucursales B ON A.fk_idsucursal = B.idsucursal
-             INNER JOIN estados C ON A.fk_idestado = C.idestado
-             ## Linea 184 colocamos el 'and'  distinto de 4 asi solo aparecen los pedidos que no figuren como 'entregados/finalizados'
-             WHERE fk_idcliente = $idcliente AND A.fk_idestado <> 4";
-            $lstRetorno = DB::select($sql);  
+                        A.idpedido,
+                        A.fecha,
+                        A.descripcion,
+                        A.total,
+                        A.fk_idsucursal,
+                        B.nombre AS sucursal,
+                        A.fk_idcliente,
+                        A.fk_idestado,
+                        C.nombre AS estado   
+                    FROM pedidos A
+                    INNER JOIN sucursales B ON A.fk_idsucursal = B.idsucursal
+                    INNER JOIN estados C ON A.fk_idestado = C.idestado
+                    WHERE fk_idcliente = :idcliente AND A.fk_idestado <> 4";
+            #linea 183, preguntamos dodnde fk sea igual al id del cliente y que el estado sea distinto de 4 (entregado)
+            $lstRetorno = DB::select($sql, ['idcliente' => $idcliente]);  
             return $lstRetorno;
+        }
     }
+    
 }
 ?>

@@ -28,15 +28,22 @@
                                     </thead>
                                     <tbody>
                                           <?php $total =0 ?>
-                                          @foreach($aCarrito_productos as $item)
-                                          <?php $subtotal=$item->precioproducto * $item->cantidad; ?>
+                                          @foreach($aCarrito_productos as $producto)
+                                          <?php $subtotal=$producto->precioproducto * $producto->cantidad; ?>
                                           <tr>
-                                          <td><img src="/files/{{ $item->imagenproducto}}" alt="" width="100" ></td>
-                                          <td>{{$item->nombreproducto}}</td>    
-                                          <td>${{ number_format($item->precioproducto, 2, ",", ".")}}</td>    
-                                          <td>{{$item->cantidad}}</td>    
+                                          <td><img src="/files/{{ $producto->imagenproducto}}" alt="" width="100" ></td>
+                                          <td>{{$producto->nombreproducto}}</td>    
+                                          <td>${{ number_format($producto->precioproducto, 2, ",", ".")}}</td>    
+                                          <td>{{$producto->cantidad}}</td>    
                                           <td>{{ number_format($subtotal, 2, ",", ".") }}</td>
-                                          <td><i class="fa-solid fa-ban"></i></td>    
+                                          
+                                          <td>
+                                                <form action="/eliminarPorCliente" method="POST">
+                                                @csrf
+                                                <input type="hidden" name="producto_id" value="{{$producto->fk_idproducto}}">
+                                                <button type="submit" class="btn btn-danger">Eliminar</button>
+                                             </form>
+                                          </td>    
                                           </tr>
                                           <?php $total+=$subtotal; ?>
                                           @endforeach 

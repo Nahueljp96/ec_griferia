@@ -71,16 +71,19 @@
                                                       </tr>
                                                 </thead>
                                                 <tbody>
+                                                <!--Linea 75, validamos la variable y consultamos que sea un array asi no tira error (en caso que no haya ningun pedido) !-->      
+                                                @if(isset($aPedidos) && is_array($aPedidos))  
                                                       @foreach($aPedidos as $pedido)
                                                       <tr>
                                                             <td>{{$pedido->idpedido}}</td>
-                                                            <td>{{$pedido->fecha}}</td>
+                                                            <td>{{date_format(date_create($pedido->fecha), "d/m/Y H:i")}}</td>
                                                             <td>{{$pedido->descripcion}}</td>
-                                                            <td>{{$pedido->total}}</td>
+                                                            <td>{{number_format($pedido->total, 2, "," , ".") . "$"}}</td>
                                                             <td>{{$pedido->sucursal}}</td>
                                                             <td>{{$pedido->estado}}</td>
                                                       </tr>
                                                       @endforeach
+                                                @endif      
                                                 </tbody>
                                           </table>
                                     </div>

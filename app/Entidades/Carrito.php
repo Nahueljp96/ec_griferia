@@ -52,6 +52,11 @@ protected $table = 'carritos';
         $sql = "DELETE FROM $this->table WHERE idcarrito=?";         
         $affected = DB::delete($sql, [$this->idcarrito]);
     }
+    public function eliminarPorCliente($idCliente)
+    {
+        $sql = "DELETE FROM $this->table WHERE idcliente=?";         
+        $affected = DB::delete($sql, [$idCliente]);
+    }
 
     public function obtenerPorId($idcarrito)
     {
