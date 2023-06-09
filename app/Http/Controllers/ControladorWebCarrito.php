@@ -9,6 +9,7 @@ use App\Entidades\Cliente;
 use App\Entidades\Carrito;
 use App\Entidades\Carrito_producto;
 use App\Entidades\Pedido;
+use DB;
 use Session;
 require app_path().'/start/constants.php';
 
@@ -72,6 +73,17 @@ class ControladorWebCarrito extends Controller
             $carrito->eliminarPorCliente(Session::get("idcliente"));
             return redirect('/mi-cuenta')->with('success', 'El pedido se ha procesado correctamente.');
      }
+     
+     public function eliminarProducto(Request $request)
+            {
+             $productoId = $request->input('producto_id');
+                  // Eliminar el producto del carrito en la base de datos
+                  DB::table('carrito_productos')->where('fk_idproducto', $productoId)->delete();
+
+                  return redirect()->back()->with('success', 'El producto ha sido eliminado del carrito.');
+
+            
+            }
 
      
 }

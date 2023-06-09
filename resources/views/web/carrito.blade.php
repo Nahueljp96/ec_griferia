@@ -38,7 +38,7 @@
                                           <td>{{ number_format($subtotal, 2, ",", ".") }}</td>
                                           
                                           <td>
-                                                <form action="/eliminarPorCliente" method="POST">
+                                                <form action="/eliminarProducto" method="POST">
                                                 @csrf
                                                 <input type="hidden" name="producto_id" value="{{$producto->fk_idproducto}}">
                                                 <button type="submit" class="btn btn-danger">Eliminar</button>

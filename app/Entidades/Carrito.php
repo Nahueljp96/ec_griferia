@@ -4,6 +4,8 @@ namespace App\Entidades;
 
 use DB;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
+
 
 class Carrito extends Model
 {
@@ -56,6 +58,13 @@ protected $table = 'carritos';
     {
         $sql = "DELETE FROM $this->table WHERE idcliente=?";         
         $affected = DB::delete($sql, [$idCliente]);
+    }
+    public function eliminarProducto($producto_id){
+
+        
+        $sql = "DELETE FROM carrito_productos WHERE idcarrito_producto = :fk_idproducto";
+        DB::delete($sql, ['fk_idproducto' => $producto_id]);
+     
     }
 
     public function obtenerPorId($idcarrito)
