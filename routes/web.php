@@ -40,7 +40,8 @@ Route::group(array('domain' => '127.0.0.1'), function () {
     Route::post('/datos-cambiados', 'ControladorWebDatosCambiados@index');
     Route::get('/carrito', 'ControladorWebCarrito@index');
     Route::post('/carrito', 'ControladorWebCarrito@finalizarPedido');
-    Route::post('/carrito', 'ControladorWebCarrito@eliminarProducto');
+    Route::post('/eliminarProducto', 'ControladorWebCarrito@eliminarProducto');
+
     // web.php
 
 

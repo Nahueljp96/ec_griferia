@@ -122,7 +122,7 @@ class Carrito_producto extends Model
             $sql = "DELETE A.* FROM carrito_productos A 
                     INNER JOIN carritos B on A.fk_idcarrito = B.idcarrito
                     WHERE B.fk_idcliente =?";
-                  $affected = DB::delete($sql, [$idCliente]);
+                  $affected = DB::delete($sql, [$idcliente]);
             
             
             

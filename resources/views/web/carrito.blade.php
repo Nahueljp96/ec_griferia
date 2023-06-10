@@ -27,27 +27,33 @@
 
                                     </thead>
                                     <tbody>
-                                          <?php $total =0 ?>
-                                          @foreach($aCarrito_productos as $producto)
-                                          <?php $subtotal=$producto->precioproducto * $producto->cantidad; ?>
-                                          <tr>
-                                          <td><img src="/files/{{ $producto->imagenproducto}}" alt="" width="100" ></td>
-                                          <td>{{$producto->nombreproducto}}</td>    
-                                          <td>${{ number_format($producto->precioproducto, 2, ",", ".")}}</td>    
-                                          <td>{{$producto->cantidad}}</td>    
-                                          <td>{{ number_format($subtotal, 2, ",", ".") }}</td>
+                                          <?php $total = 0 ?>
+                                          <?php #Se agrega el $index para colocarle un indice al bucle foreach y poder eliminar cualquier producto del carrito#?>
+                                          @foreach($aCarrito_productos as $index => $producto)
                                           
-                                          <td>
-                                                <form action="/eliminarProducto" method="POST">
-                                                @csrf
-                                                <input type="hidden" name="producto_id" value="{{$producto->fk_idproducto}}">
-                                                <button type="submit" class="btn btn-danger">Eliminar</button>
-                                             </form>
-                                          </td>    
-                                          </tr>
-                                          <?php $total+=$subtotal; ?>
-                                          @endforeach 
+                                              <?php $subtotal = $producto->precioproducto * $producto->cantidad; ?>
+                                              <tr>
+                                                  <td><img src="/files/{{ $producto->imagenproducto}}" alt="" width="100" ></td>
+                                                  <td>{{$producto->nombreproducto}}</td>    
+                                                  <td>${{ number_format($producto->precioproducto, 2, ",", ".")}}</td>    
+                                                  <td>{{$producto->cantidad}}</td>    
+                                                  <td>{{ number_format($subtotal, 2, ",", ".") }}</td>
+                                                  <td>
+                                                      <form action="/eliminarProducto" method="POST">
+                                                          @csrf
+                                                          <input type="hidden" name="producto_id" value="{{$producto->fk_idproducto}}">
+                                                          <input type="hidden" name="index" value="{{$index}}">
+                                                          <button type="submit" class="btn btn-danger">Eliminar</button>
+                                                      </form>
+                                                  </td>   
+                                              </tr>
+                                               <?php #print_r($aCarrito_productos)?>
+                                              <?php $total += $subtotal; ?>
+                                              
+                                          @endforeach
+                                          
                                     </tbody>
+                                      
                               </table>
                               <div class="float-right lead">
                                     <h4>Total: ${{$total}}</h4>

@@ -56,7 +56,7 @@ protected $table = 'carritos';
     }
     public function eliminarPorCliente($idCliente)
     {
-        $sql = "DELETE FROM $this->table WHERE idcliente=?";         
+        $sql = "DELETE FROM $this->table WHERE fk_idcliente=?";         
         $affected = DB::delete($sql, [$idCliente]);
     }
     public function eliminarProducto($producto_id){
@@ -110,6 +110,22 @@ protected $table = 'carritos';
         $lstRetorno = DB::select($sql);
         return $lstRetorno;
     } 
+
+    ####TEST#####
+
+    public function obtenerCarritoProductos($idcliente)
+        {
+                $idcliente = auth()->user()->id; // Obtén el ID del usuario actualmente autenticado
+
+                $productos = DB::table('carrito_productos')
+                    ->join('productos', 'carrito_productos.fk_idproducto', '=', 'productos.id')
+                    ->select('productos.*', 'carrito_productos.cantidad')
+                    ->where('carrito_productos.fk_idcarrito', $idcliente)
+                    ->get();
+
+                return $productos;
+        }
+
 
 }
 ?>
