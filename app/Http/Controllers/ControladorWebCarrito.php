@@ -79,7 +79,7 @@ class ControladorWebCarrito extends Controller
             return redirect('/mi-cuenta')->with('success', 'El pedido se ha procesado correctamente.');
      }
      #--------------------test-----------------------------#
-     public function eliminarProducto(Request $request)
+     public function eeeliminarProducto(Request $request)
             {
              $productoId = $request->input('producto_id');
              
@@ -94,28 +94,34 @@ class ControladorWebCarrito extends Controller
 
      #--------------------------test-------------------------------
      
-     public function eeeliminarProducto(Request $request)
+     public function eliminarProducto(Request $request)
       {
-            $index = $request->input('index');
-            $productoId = $request->input('producto_id');
-      
-            // Obtener los productos del carrito
-            $carrito_producto = new Carrito_producto();
-            $aCarritoProductos = $carrito_producto->obtenerPorCliente(Session::get("idcliente")); //obtenemos los productos del carrito
-      
-            // Verificar si el índice existe en el array de productos del carrito
-            if (isset($aCarritoProductos[$index])) {
-                  // Verificar si el ID del producto en el carrito coincide con el ID recibido
-                  if ($aCarritoProductos[$index]->fk_idproducto == $productoId) {
+      $indexx = $request->input('indexx');
+      $productoId = $request->input('producto_id');
+
+      // Obtener los productos del carrito
+      $carrito_producto = new Carrito_producto();
+      $aCarritoProductos = $carrito_producto->obtenerPorCliente(Session::get("idcliente"));
+
+      // Verificar si el índice existe en el array de productos del carrito
+      if (isset($aCarritoProductos[$indexx])) {
+            $productoAEliminar = $aCarritoProductos[$indexx];
+
+            // Verificar si el ID del producto en el carrito coincide con el ID recibido
+            if ($productoAEliminar->fk_idproducto == $productoId) {
                   // Eliminar el producto del carrito en la base de datos
-                  DB::table('carrito_productos')->where('fk_idproducto', $productoId)->delete();
-      
-                  return redirect()->back()->with('success', 'El producto ha sido eliminado del carrito.');
-                  }
+                  DB::table('carrito_productos')
+                  ->where('idcarrito_producto', $productoAEliminar->idcarrito_producto)
+                  ->delete();
+
+                  
+                  return  redirect()->back()->with('success', 'El producto ha sido eliminado del carrito.'); 
             }
-      
-            return redirect()->back()->with('error', 'No se pudo eliminar el producto del carrito.');
       }
+
+      return redirect()->back()->with('error', 'No se pudo eliminar el producto del carrito.');
+      }
+
      
 
 

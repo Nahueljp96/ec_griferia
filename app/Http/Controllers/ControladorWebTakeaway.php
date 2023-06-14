@@ -102,6 +102,7 @@ class ControladorWebTakeaway extends Controller
             //agrega el id del producto y la cantidad obtenida del input
             $carrito_producto->fk_idproducto = $idProductoSelect;
             $carrito_producto->cantidad = $cantidadProducto;
+            $carrito_producto->indexx = 0;
             $carrito_producto->insertar();
 
             //forma mejorada de poner los msg:

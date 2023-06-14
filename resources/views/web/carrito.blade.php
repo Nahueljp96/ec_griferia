@@ -9,9 +9,18 @@
                   <div class="heading_container heading_center">
                         <h2>Mi Carrito</h2>
                   </div>
-                  @if(isset($msg))
-                        <div class="alert alert-{{ $msg['estado']}}" role="alert">{{}}</div>
+                  <!-- mejor forma de poner lo de la variable msg -->
+                  @if(session('success'))
+                  <div class="alert alert-success">
+                        {{ session('success') }}
+                  </div>
                   @endif
+                  @if(session('error'))
+                  <div class="alert alert-danger">
+                        {{ session('error') }}
+                  </div>
+                  @endif
+
                   @csrf      
                   <div class="row">
                         <div class="col-12 my-5">
@@ -29,9 +38,9 @@
                                     <tbody>
                                           <?php $total = 0 ?>
                                           <?php #Se agrega el $index para colocarle un indice al bucle foreach y poder eliminar cualquier producto del carrito#?>
-                                          @foreach($aCarrito_productos as $index => $producto)
-                                          
-                                              <?php $subtotal = $producto->precioproducto * $producto->cantidad; ?>
+                                          @foreach($aCarrito_productos as $indexx => $producto)
+                                               
+                                              <?php $subtotal = $producto->precioproducto * $producto->cantidad;  ?>
                                               <tr>
                                                   <td><img src="/files/{{ $producto->imagenproducto}}" alt="" width="100" ></td>
                                                   <td>{{$producto->nombreproducto}}</td>    
@@ -42,12 +51,11 @@
                                                       <form action="/eliminarProducto" method="POST">
                                                           @csrf
                                                           <input type="hidden" name="producto_id" value="{{$producto->fk_idproducto}}">
-                                                          <input type="hidden" name="index" value="{{$index}}">
-                                                          <button type="submit" class="btn btn-danger">Eliminar</button>
+                                                          <input type="hidden" name="indexx" value="{{$indexx}}">
+                                                          <button type="submit" class="btn btn-danger" id="eliminar-{{ $indexx }}">Eliminar</button>
                                                       </form>
                                                   </td>   
                                               </tr>
-                                               <?php #print_r($aCarrito_productos)?>
                                               <?php $total += $subtotal; ?>
                                               
                                           @endforeach

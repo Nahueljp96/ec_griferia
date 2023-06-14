@@ -191,7 +191,7 @@ class ControladorPedido extends Controller
         $id = $request->input('id');
 
         if (Usuario::autenticado() == true) {
-            if (Patente::autorizarOperacion("PEDIDOELIMINAR")) {
+            if (Patente::autorizarOperacion("PEDIDOBAJA")) {
 
                 $entidad = new Pedido();
                 $entidad->cargarDesdeRequest($request);

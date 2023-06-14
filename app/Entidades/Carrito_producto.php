@@ -27,13 +27,15 @@ class Carrito_producto extends Model
             $sql = "INSERT INTO $this->table(
                   fk_idproducto,
                   fk_idcarrito,
-                  cantidad
+                  cantidad,
+                  indexx
 
-            )  VALUES (?,?,?);";
+            )  VALUES (?,?,?,?);";
             $RESULT = DB::insert($sql,[
             $this->fk_idproducto,
             $this->fk_idcarrito,
-            $this->cantidad
+            $this->cantidad,
+            $this->indexx
             ]);
             return $this->idcarrito_producto = DB::getPdo()->lastInsertId();
       }

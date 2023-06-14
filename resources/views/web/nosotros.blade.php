@@ -16,18 +16,14 @@
           <div class="detail-box">
             <div class="heading_container">
               <h2>
-                We Are Feane
+                Estamos listos!
               </h2>
             </div>
             <p>
-              There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration
-              in some form, by injected humour, or randomised words which don't look even slightly believable. If you
-              are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in
-              the middle of text. All
+              ¿Te gustaría participar de nuestra creciente familia? En AllBulgersNow, estamos en busqueda de nuevos talentos que se sumen a nuestro amplio equipo,
+              si te interesa formar parte por favor, envianos un mensaje adjuntando tu Cv, nos comunicaremos con vos!
             </p>
-            <a href="">
-              Read More
-            </a>
+           
           </div>
         </div>
       </div>
