@@ -56,6 +56,7 @@
                                                       </form>
                                                   </td>   
                                               </tr>
+                                              <?php print_r($producto); ?>
                                               <?php $total += $subtotal; ?>
                                               
                                           @endforeach

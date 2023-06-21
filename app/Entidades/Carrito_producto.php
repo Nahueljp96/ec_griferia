@@ -49,24 +49,27 @@ class Carrito_producto extends Model
 
       }
 
-      public function obtenerPorId($idcarrito_producto){
-            $sql= "SELECT
-                  idcarrito_producto,
-                  fk_idproducto,
-                  fk_idcarrito,
-                  cantidad
-                  FROM $this->table WHERE idcarrito_producto = $idcarrito_producto";
-            $lstRetorno = DB::select($sql);
-            
-            if (count($lstRetorno) >0){
-                  $this->idcarrito_producto= $lstRetorno[0]->idcarrito_producto;
-                  $this->fk_idproducto = $lstRetorno[0]->fk_idproducto;
-                  $this->fk_idcarrito = $lstRetorno[0]->fk_idcarrito;
-                  $this->cantidad = $lstRetorno[0]->cantidad;
-                  return $this;
-
-            }
+      public function obtenerPorId($idcarrito_producto) {
+           
+             $sql = "SELECT
+                        idcarrito_producto,
+                        fk_idproducto,
+                        fk_idcarrito,
+                        cantidad
+                        FROM $this->table WHERE idcarrito_producto = ?";
+                  
+                  $lstRetorno = DB::select($sql, [$idcarrito_producto]);
+                  
+                  if (count($lstRetorno) > 0) {
+                        $this->idcarrito_producto = $lstRetorno[0]->idcarrito_producto;
+                        $this->fk_idproducto = $lstRetorno[0]->fk_idproducto;
+                        $this->fk_idcarrito = $lstRetorno[0]->fk_idcarrito;
+                        $this->cantidad = $lstRetorno[0]->cantidad;
+                        return $this;
+                  }  
+                  return null;   
       }
+
 
       public function obtenerPorCarrito($idcarrito){
             //tengo que seleccionar todos los carritos donde el fk_idcarrito sea igual a asdasd
