@@ -9,7 +9,7 @@ use App\Entidades\Cliente;
 use App\Entidades\Carrito;
 use App\Entidades\Carrito_producto;
 use App\Entidades\Pedido;
-
+use Illuminate\Support\Facades\Log;
 
 use DB;
 use Session;
@@ -93,11 +93,12 @@ class ControladorWebCarrito extends Controller
      
             $indexx = $request->input('indexx');
             $productoId = $request->input('producto_id');
-
+            
             // Obtener los productos del carrito
             $carrito_producto = new Carrito_producto();
             $aCarritoProductos = $carrito_producto->obtenerPorCliente(Session::get("idcliente"));
-                  
+            
+                 
             // Verificar si el índice existe en el array de productos del carrito
             if (isset($aCarritoProductos[$indexx])) {
                   $productoAEliminar = $aCarritoProductos[$indexx];

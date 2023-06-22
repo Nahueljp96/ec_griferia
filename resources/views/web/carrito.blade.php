@@ -2,8 +2,7 @@
 
 @section ("contenido")
 <section class="fodd_section layout_padding carrito">
-      <form action="" method="POST">
-      @csrf      
+           
             <div class="container">
             
                   <div class="heading_container heading_center">
@@ -22,7 +21,7 @@
                   @endif
 
                   @csrf      
-                  <div class="row">
+            <div class="row">
                         <div class="col-12 my-5">
                               <table class="col-12 my-5">  
                                     <thead>
@@ -56,7 +55,7 @@
                                                       </form>
                                                   </td>   
                                               </tr>
-                                              <?php print_r($producto); ?>
+                                              
                                               <?php $total += $subtotal; ?>
                                               
                                           @endforeach
@@ -69,6 +68,8 @@
                               </div>
                               
                         </div>
+            <form action="" method="POST">
+                              @csrf 
                         <div class="col-6">
                               <label for="" class="d-block">Selecciona la sucursal donde retirar el pedido:</label>
                               
@@ -92,11 +93,13 @@
                         </div>
                         <div class="col-12">
                               <button type="submit" class=" float-right btn btn-primary lead"> Finalizar mi pedido </button>
-                        </div>  
-                  </div>
+   
+                        </div> 
+            </form>       
+                  
             
             </div>
-      </form>
+      
       
 </section>
 
