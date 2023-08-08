@@ -64,8 +64,9 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <!--Linea 75, validamos la variable y consultamos que sea un array asi no tira error (en caso que no haya ningun pedido) !-->
+                                <!--Linea 68, validamos la variable y consultamos que sea un array asi no tira error (en caso que no haya ningun pedido) !-->
                                 @if(isset($aPedidos) && is_array($aPedidos))
+                                
                                 @foreach($aPedidos as $pedido)
                                 <tr>
                                     <td>{{ $pedido->idpedido }}</td>

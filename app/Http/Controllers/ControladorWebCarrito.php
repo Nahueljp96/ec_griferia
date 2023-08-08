@@ -49,22 +49,25 @@ class ControladorWebCarrito extends Controller
      }
      public function finalizarPedido(Request $request){
             $pedido = new Pedido();
-            $pedido->fecha = Date('Y-m-d-H:i:s');
+            $pedido->fecha = date('Y-m-d-H:i:s');
             
-            $carrito_producto = new Carrito_producto();
-            $aCarritoProductos = $carrito_producto->obtenerPorCliente(Session::get("idcliente"));
+            
+                $carrito_producto = new Carrito_producto();
+                $aCarritoProductos = $carrito_producto->obtenerPorCliente(Session::get("idcliente"));
 
-            foreach ($aCarritoProductos as $carrito){
-                $pedido->descripcion .=  $carrito->producto ." - ";
-                $pedido->total = $carrito->cantidad * $carrito->precio;  
-            }
-            
-            
-            $pedido->fk_idsucursal = $request->input('lstSucursal');
-            $pedido->fk_idcliente = Session::get("idcliente");
-            $pedido->fk_idestado= PEDIDO_PENDIENTE;
-            
-            $pedido->insertar();
+                $pedido->total =0;
+                foreach ($aCarritoProductos as $carrito){
+                    $pedido->descripcion .=  $carrito->producto ." - ";
+                    $pedido->total += $carrito->cantidad * $carrito->precio;
+                }
+                
+                
+                $pedido->fk_idsucursal = $request->input('lstSucursal');
+                $pedido->fk_idcliente = Session::get("idcliente");
+                $pedido->fk_idestado= PEDIDO_PENDIENTE;
+                
+                $pedido->insertar();
+           
 
             //Vaciar el carrito
             $carrito_producto->eliminarPorCliente(Session::get("idcliente"));
@@ -73,21 +76,7 @@ class ControladorWebCarrito extends Controller
             $carrito->eliminarPorCliente(Session::get("idcliente"));
             return redirect('/mi-cuenta')->with('success', 'El pedido se ha procesado correctamente.');
      }
-     #--------------------test-----------------------------#
-     public function eeeliminarProducto(Request $request)
-            {
-             $productoId = $request->input('producto_id');
-             
-             
-                  // Eliminar el producto del carrito en la base de datos
-                  DB::table('carrito_productos')->where('fk_idproducto', $productoId)->delete();
-
-                  return redirect()->back()->with('success', 'El producto ha sido eliminado del carrito.');
-
-             
-            }
-
-     #--------------------------test-------------------------------
+     
      
      public function eliminarProducto(Request $request) {
      
@@ -117,34 +106,6 @@ class ControladorWebCarrito extends Controller
 
             return redirect()->back()->with('error', 'No se pudo eliminar el producto del carrito.');
       }
-
-
-      //otro test
-
-      public function ccceliminarProducto(Request $request)
-            {
-            $productoId = $request->input('producto_id');
-
-            // Obtener el producto del carrito por su ID
-            $carrito_producto = new Carrito_producto();
-            $productoAEliminar = $carrito_producto->obtenerPorId($productoId);
-
-            // Verificar si el producto existe en el carrito
-            if ($productoAEliminar) {
-                  // Eliminar el producto del carrito en la base de datos
-                  DB::table('carrito_productos')
-                        ->where('idcarrito_producto', $productoAEliminar->idcarrito_producto)
-                        ->delete();
-
-                  return redirect()->back()->with('success', 'El producto ha sido eliminado del carrito.'); 
-            }
-
-            return redirect()->back()->with('error', 'No se pudo eliminar el producto del carrito.');
-            }
-
-
-     
-
 
 
 }
