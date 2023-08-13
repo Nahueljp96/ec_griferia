@@ -9,11 +9,11 @@
 @section('breadcrumb')
 <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="/admin">Inicio</a></li>
-    <li class="breadcrumb-item active">Cliente</a></li>
+    <li class="breadcrumb-item active">Proveedores</a></li>
 </ol>
 <ol class="toolbar">
-    <li class="btn-item"><a title="Nuevo" href="/admin/cliente/nuevo" class="fa fa-plus-circle" aria-hidden="true"><span>Nuevo</span></a></li>
-    <li class="btn-item"><a title="Recargar" href="#" class="fa fa-refresh" aria-hidden="true" onclick='window.location.replace("/admin/clientes");'><span>Recargar</span></a></li>
+    <li class="btn-item"><a title="Nuevo" href="/admin/proveedor/nuevo" class="fa fa-plus-circle" aria-hidden="true"><span>Nuevo</span></a></li>
+    <li class="btn-item"><a title="Recargar" href="#" class="fa fa-refresh" aria-hidden="true" onclick='window.location.replace("/admin/proveedores");'><span>Recargar</span></a></li>
 </ol>
 @endsection
 @section('contenido')
@@ -27,11 +27,11 @@ if (isset($msg)) {
     <thead>
         <tr>
             <th></th>
-            <th>Nombre y Apellido</th>
+            <th>Nombre</th>
             <th>Correo </th>
-            <th>Dni</th>
-            <th>Celular</th>
+            <th>Telefono</th>
             <th>Direccion</th>
+            <th>Descripcion</th>
         </tr>
     </thead>
 </table> 
@@ -45,8 +45,9 @@ if (isset($msg)) {
 	    "bSearchable": true, //barra de busqueda
         "pageLength": 25, // cantidad de registros por página
         "order": [[ 0, "asc" ]], // ordenamiento desde la primera columna de manera ascendente
-	    "ajax": "{{ route('cliente.cargarGrilla') }}" //atributo que busca los datos para la grilla.
+	    "ajax": "{{ route('proveedor.cargarGrilla') }}" //atributo que busca los datos para la grilla.
 	});
 } );   
 </script>
 @endsection
+

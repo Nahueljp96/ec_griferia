@@ -202,5 +202,15 @@ Route::get('/admin/estado/eliminar', 'ControladorEstado@eliminar');
 Route::get('/admin/estado/{id}', 'ControladorEstado@editar');
 Route::post('/admin/estado/{id}', 'ControladorEstado@guardar');
 
+/* --------------------------------------------- */
+/* CONTROLADOR Proveedores                          */
+/* --------------------------------------------- */
 
+Route::get('/admin/proveedor/nuevo', 'ControladorProveedor@nuevo');
+Route::get('/admin/proveedores', 'ControladorProveedor@index');
+Route::post('/admin/proveedor/nuevo', 'ControladorProveedor@guardar');
+Route::get('/admin/proveedores/CargarGrilla', 'Controladorproveedor@cargarGrilla')->name('proveedor.cargarGrilla');
+Route::get('/admin/proveedor/eliminar', 'Controladorproveedores@eliminar');
+Route::get('/admin/proveedor/{id}', 'Controladorproveedor@editar');
+Route::post('/admin/proveedor/{id}', 'Controladorproveedor@guardar');
 

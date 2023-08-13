@@ -5,7 +5,7 @@ namespace App\Entidades;
 use DB;
 use Illuminate\Database\Eloquent\Model;
 
-class Cliente extends Model
+class Proveedor extends Model
 {
 protected $table = 'proveedores';
       public $timestamps = false;
@@ -15,6 +15,7 @@ protected $table = 'proveedores';
             'nombre',
             'correo',
             'telefono',
+            'direccion',
             'descripcion'
             
       ];
@@ -28,6 +29,7 @@ protected $table = 'proveedores';
         $this->nombre = $request->input('txtNombre');
         $this->correo = $request->input('txtCorreo');
         $this->telefono = $request->input('txtTelefono');
+        $this->direccion = $request->input('txtDireccion');
         $this->descripcion =$request->input('txtDescripcion');
       }
       
@@ -37,13 +39,15 @@ protected $table = 'proveedores';
                   nombre, 
                   correo,
                   telefono,
+                  direccion,
                   descripcion
                  
-              ) VALUES (?, ?, ?, ?);";
+              ) VALUES (?, ?, ?, ?, ?);";
           $result = DB::insert($sql, [
               $this->nombre,
               $this->correo,
               $this->telefono,
+              $this->direccion,
               $this->descripcion,
              
           ]);
@@ -56,7 +60,8 @@ protected $table = 'proveedores';
                 nombre='$this->nombre',
                 correo='$this->correo',
                 telefono='$this->telefono',
-                descripcion='$this->descripcion',
+                direccion='$this->direccion',
+                descripcion='$this->descripcion'
                 
                 
                 WHERE idproveedor=?";
@@ -78,9 +83,10 @@ protected $table = 'proveedores';
                 nombre,
                 correo,
                 telefono,
+                direccion,
                 descripcion
                 
-                FROM $this->table WHERE idcliente = $idproveedor";
+                FROM $this->table WHERE idproveedor = $idproveedor";
         $lstRetorno = DB::select($sql);
 
         if (count($lstRetorno) > 0) {
@@ -88,6 +94,7 @@ protected $table = 'proveedores';
             $this->nombre = $lstRetorno[0]->nombre;
             $this->correo = $lstRetorno[0]->correo;
             $this->telefono = $lstRetorno[0]->telefono;
+            $this->direccion = $lstRetorno[0]->direccion;
             $this->descripcion = $lstRetorno[0]->descripcion;
             return $this;
         }
@@ -101,6 +108,7 @@ protected $table = 'proveedores';
                 A.nombre,
                 A.correo,
                 A.telefono,
+                A.direccion,
                 A.descripcion,
                
                 FROM $this->table A ORDER BY A.nombre";
@@ -116,7 +124,8 @@ protected $table = 'proveedores';
             1 => 'A.nombre',
             2=>  'A.correo',
             3 => 'A.telefono',
-            4 => 'A.descripcion',
+            4 => 'A.direccion',
+            5 => 'A.descripcion',
             
         );
         #El A. hace que le agregue un alias, es decir A referencia a la tabla clientes
@@ -125,6 +134,7 @@ protected $table = 'proveedores';
                     A.nombre,
                     A.correo,
                     A.telefono,
+                    A.direccion,
                     A.descripcion
                     
                     FROM proveedores A
@@ -136,6 +146,7 @@ protected $table = 'proveedores';
             $sql .= " AND ( A.nombre LIKE '%" . $request['search']['value'] . "%' ";
             $sql .= " OR A.correo LIKE '%" . $request['search']['value'] . "%' ";
             $sql .= " OR A.telefono LIKE '%" . $request['search']['value'] . "%' ";
+            $sql .= " OR A.direccion LIKE '%" . $request['search']['value'] . "%' ";
             $sql .= " OR A.descripcion LIKE '%" . $request['search']['value'] . "%' )";
         }
         $sql .= " ORDER BY " . $columns[$request['order'][0]['column']] . "   " . $request['order'][0]['dir']; //forma de ordenarlo
