@@ -64,10 +64,11 @@ class ControladorProveedor extends Controller
             $row = array();
             $row[] = "<a href='/admin/proveedor/" .$aProveedores[$i]->idproveedor. "' class='btn btn-secondary'><i class='fa-solid fa-pencil'></i></a>";
             $row[] = $aProveedores[$i]->nombre;
+            $row[] = $aProveedores[$i]->descripcion;
             $row[] = $aProveedores[$i]->correo;
             $row[] = $aProveedores[$i]->telefono;
             $row[] = $aProveedores[$i]->direccion;
-            $row[] = $aProveedores[$i]->descripcion;
+            
             $cont++;
             $data[] = $row;
         }

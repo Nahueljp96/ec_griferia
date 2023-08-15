@@ -109,7 +109,7 @@ protected $table = 'proveedores';
                 A.correo,
                 A.telefono,
                 A.direccion,
-                A.descripcion,
+                A.descripcion
                
                 FROM $this->table A ORDER BY A.nombre";
         $lstRetorno = DB::select($sql);

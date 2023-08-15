@@ -24,6 +24,7 @@ if (isset($msg)) {
 }
 ?>
 <table id="grilla" class="display">
+    <h6>Para buscar fechas se debe usar el formato "2023-08-14" por ej</h6>
     <thead>
         <tr>
             <th></th>

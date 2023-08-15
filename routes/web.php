@@ -214,3 +214,15 @@ Route::get('/admin/proveedor/eliminar', 'Controladorproveedores@eliminar');
 Route::get('/admin/proveedor/{id}', 'Controladorproveedor@editar');
 Route::post('/admin/proveedor/{id}', 'Controladorproveedor@guardar');
 
+/* --------------------------------------------- */
+/* CONTROLADOR Compras                          */
+/* --------------------------------------------- */
+
+Route::get('/admin/compra/nuevo', 'ControladorCompra@nuevo');
+Route::get('/admin/compras', 'ControladorCompra@index');
+Route::post('/admin/compra/nuevo', 'ControladorCompra@guardar');
+Route::get('/admin/compras/CargarGrilla', 'ControladorCompra@cargarGrilla')->name('compra.cargarGrilla');
+Route::get('/admin/compra/eliminar', 'ControladorCompra@eliminar');
+Route::get('/admin/compra/{id}', 'ControladorCompra@editar');
+Route::post('/admin/compra/{id}', 'ControladorCompra@guardar');
+
