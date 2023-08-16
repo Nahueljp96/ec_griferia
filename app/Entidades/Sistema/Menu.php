@@ -122,8 +122,8 @@ class Menu extends Model
         }
         return null;
     }
-
-    public function guardar() {
+    //la funcion original
+    public function guardarrrrrrr() {
         $sql = "UPDATE sistema_menues SET
             nombre='$this->nombre',
             id_padre=$this->id_padre,
@@ -134,6 +134,35 @@ class Menu extends Model
             WHERE idmenu=?";
         $affected = DB::update($sql, [$this->idmenu]);
     }
+    //test
+    public function guardar() {
+        $sql = "UPDATE sistema_menues SET
+                nombre = ?,
+                id_padre = ?,
+                orden = ?,
+                activo = ?,
+                url = ?,
+                css = ?
+                WHERE idmenu = ?";
+        
+        // Verificar si id_padre debe ser nulo o no
+        if ($this->id_padre === null) {
+            $idPadreValue = null; // Setear valor nulo
+        } else {
+            $idPadreValue = $this->id_padre; // Usar el valor proporcionado
+        }
+    
+        $affected = DB::update($sql, [
+            $this->nombre,
+            $idPadreValue,
+            $this->orden,
+            $this->activo,
+            $this->url,
+            $this->css,
+            $this->idmenu
+        ]);
+    }
+    
 
     public function eliminar()
     {

@@ -88,7 +88,7 @@ class ControladorCompra extends Controller
     public function guardar(Request $request) {
         try {
             //Define la entidad servicio
-            $titulo = "Modificar Producto";
+            $titulo = "Modificar Compra";
             $entidad = new Compra ();
             $entidad->cargarDesdeRequest($request);
 
