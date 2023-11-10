@@ -107,7 +107,7 @@ class ControladorWebCarrito extends Controller
             return redirect()->back()->with('error', 'No se pudo eliminar el producto del carrito.');
       }
 
-
+//valeria recontra zorra
 }
 
 
