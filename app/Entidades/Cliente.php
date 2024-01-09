@@ -149,7 +149,7 @@ protected $table = 'clientes';
         #El A. hace que le agregue un alias, es decir A referencia a la tabla clientes
         $sql = "SELECT DISTINCT  
                     A.idcliente,  
-                    A.nombre,
+                    A.nombre,                     
                     A.apellido,
                     A.correo,
                     A.dni,
