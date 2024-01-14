@@ -166,7 +166,7 @@ class ControladorPedido extends Controller
             } else {
                 $pedido = new Pedido();
                 $pedido->obtenerPorId($id);
-               // print_r($pedido); exit;
+               
 
                 $cliente = new Cliente();
                 $aClientes = $cliente->obtenerTodos();
@@ -187,7 +187,7 @@ class ControladorPedido extends Controller
     }
     public function generarBoleta($id)
     {
-        $titulo = "Modificar Pedido";
+        $titulo = "Boleta Preview";
         
         //pregunta si el usuario esta autentificado
         if (Usuario::autenticado() == true) {

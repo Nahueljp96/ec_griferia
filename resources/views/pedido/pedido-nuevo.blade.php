@@ -45,11 +45,12 @@ if (isset($msg)) {
       <form id="form1" method="POST">
             <div class="row">
                 
-                  <input type="hidden" name="_token" value="{{ csrf_token() }}"></input> <!--Linea de seguridad !-->
+                  <input type="hidden" name="_token" value="{{ csrf_token() }}"></input> 
                   <input type="hidden" id="id" name="id" class="form-control" value="{{$globalId}}" required> <!--Almacena el Id en el caso de estar editando !-->
                   <div class="form-group col-lg-6">
-                  <label>Fecha: *</label>
-                        <input type="date" id="txtFecha" name="txtFecha" class="form-control" value="{{$pedido->fecha}}" required>
+                    <!-- Forma de poder modificar y mostrar la fecha!!!-->
+                        <label>Fecha: *</label> 
+                        <input type="date" id="txtFecha" name="txtFecha" class="form-control" value="{{ \Carbon\Carbon::parse($pedido->fecha)->toDateString() }}" required>
                   </div> 
                  
                 <div class="form-group col-lg-6">
