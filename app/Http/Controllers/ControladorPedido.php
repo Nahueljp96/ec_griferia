@@ -185,6 +185,36 @@ class ControladorPedido extends Controller
             return redirect('admin/login');
         }
     }
+    public function generarBoleta($id)
+    {
+        $titulo = "Modificar Pedido";
+        
+        //pregunta si el usuario esta autentificado
+        if (Usuario::autenticado() == true) {
+            if (!Patente::autorizarOperacion("PEDIDOEDITAR")) {
+                $codigo = "PEDIDOEDITAR";
+                $mensaje = "No tiene pemisos para la operaci&oacute;n.";
+                return view('sistema.pagina-error', compact('titulo', 'codigo', 'mensaje'));
+            } else {
+                $pedido = new Pedido();
+                $pedido->obtenerPorId($id);
+               // print_r($pedido); exit;
+
+                $cliente = new Cliente();
+                $aClientes = $cliente->obtenerTodos();
+
+                $estado = new Estado();
+                $aEstados = $estado->obtenerTodos();
+
+                $sucursal = new Sucursal();
+                $aSucursales = $sucursal->obtenerTodos();
+
+                return view('pedido.boleta', compact('pedido', 'titulo', 'aClientes', 'aEstados', 'aSucursales'));
+            }
+        } else {
+            return redirect('admin/login');
+        }
+    }
 
     public function eliminar(Request $request){
         

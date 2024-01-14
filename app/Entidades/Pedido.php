@@ -4,9 +4,11 @@ namespace App\Entidades;
 use DB;
 use Illuminate\Database\Eloquent\Model;
 
+
 class Pedido extends Model
 {
 protected $table = 'pedidos';
+protected $primaryKey = 'idpedido';
       public $timestamps = false;
 
       protected $fillable = [

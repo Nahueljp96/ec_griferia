@@ -14,6 +14,8 @@
 /*Route::get('/time' , function(){$date =new Carbon;echo $date ; } );*/
 
 
+
+
 Route::group(array('domain' => '127.0.0.1'), function () {
 
     Route::get('/', 'ControladorWebHome@index');
@@ -41,7 +43,9 @@ Route::group(array('domain' => '127.0.0.1'), function () {
     Route::get('/carrito', 'ControladorWebCarrito@index');
     Route::post('/carrito', 'ControladorWebCarrito@finalizarPedido');
     Route::post('/eliminarProducto', 'ControladorWebCarrito@eliminarProducto');
+    
 
+#le borer el {idPedido} a la ultima ruta para probar
     // web.php
 
 
@@ -152,12 +156,15 @@ Route::post('/admin/producto/{id}', 'ControladorProducto@guardar');
 /* --------------------------------------------- */
 /* CONTROLADOR Pedidos                          */
 /* --------------------------------------------- */
+use App\Http\Controllers\BoletaController;
 Route::get('/admin/pedido/nuevo', 'ControladorPedido@nuevo');
 Route::get('/admin/pedidos', 'ControladorPedido@index');
 Route::post('/admin/pedido/nuevo', 'ControladorPedido@guardar');
 Route::get('/admin/pedidos/CargarGrilla', 'ControladorPedido@cargarGrilla')->name('pedido.cargarGrilla');
 Route::get('/admin/pedido/eliminar', 'ControladorPedido@eliminar');
 Route::get('/admin/pedido/{id}', 'ControladorPedido@editar');
+Route::get('/admin/pedido/boleta/{id}', 'ControladorPedido@generarBoleta');
+Route::get('/generar-boleta/{idPedido}', [BoletaController::class, 'generarBoleta'])->name('generar.boleta');
 Route::post('/admin/pedido/{id}', 'ControladorPedido@guardar');
 /* --------------------------------------------- */
 /* CONTROLADOR Postulaciones                          */

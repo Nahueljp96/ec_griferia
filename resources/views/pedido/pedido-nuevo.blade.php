@@ -102,6 +102,10 @@ if (isset($msg)) {
                 <label>Total: *</label>
                     <input type="number" id="txtTotal" name="txtTotal" class="form-control" value="{{$pedido->total}}" required>
                 </div> 
+                <div class="form-group col-lg-6">
+                <label>Generar Boleta: *</label>
+                    <a href="/admin/pedido/boleta/{{$pedido->idpedido}}">boleta</a>
+                </div> 
             
             </div>        
       </form> 
