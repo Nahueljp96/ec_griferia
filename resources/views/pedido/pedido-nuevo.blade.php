@@ -41,7 +41,7 @@ if (isset($msg)) {
     echo '<script>msgShow("' . $msg["MSG"] . '", "' . $msg["ESTADO"] . '")</script>';
 }
 ?>
-
+    <div>
       <form id="form1" method="POST">
             <div class="row">
                 
@@ -101,11 +101,11 @@ if (isset($msg)) {
                  
                 <div class="form-group col-lg-6">
                 <label>Total: *</label>
-                    <input type="number" id="txtTotal" name="txtTotal" class="form-control" value="{{$pedido->total}}" required>
+                    <input type="number" id="txtTotal" name="txtTotal" class="form-control" value="{{ number_format($pedido->total, 2, '.', '') }}" required>
                 </div> 
                 <div class="form-group col-lg-6">
                 <label>Generar Boleta: *</label>
-                    <a href="/admin/pedido/boleta/{{$pedido->idpedido}}">boleta</a>
+                    <a href="/admin/pedido/boleta/{{$pedido->idpedido}} ">boleta</a>
                 </div> 
             
             </div>        

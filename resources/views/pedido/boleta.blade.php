@@ -40,10 +40,16 @@
 <body>
     <h1>Boleta</h1>
     <div class="info">
-        <p>ID del Pedido: {{ $pedido->idpedido }}</p>
+        @foreach($aClientes as $cliente)
+        @if($cliente->idcliente == $pedido->fk_idcliente)
+            <option selected value="{{ $cliente->idcliente}}">{{ $cliente->nombre}} {{ $cliente->apellido}}</option>
+        @endif    
+        @endforeach   
+        
         <p>Fecha: {{ $pedido->fecha }}</p>
+        
         <p>Descripción: {{ $pedido->descripcion }}</p>
-        <p>Total: {{ $pedido->total }}</p>
+        <p>Total: {{ number_format($pedido->total, 2, '.', '') }}</p>
         <!-- Agrega más detalles según sea necesario -->
     </div>
     <div class="button-container">
