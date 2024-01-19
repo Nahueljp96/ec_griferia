@@ -13,7 +13,8 @@
 
 /*Route::get('/time' , function(){$date =new Carbon;echo $date ; } );*/
 
-
+use App\Http\Controllers\ControladorProducto;
+use App\Http\Controllers\ProductoController;
 
 
 Route::group(array('domain' => '127.0.0.1'), function () {
@@ -151,8 +152,14 @@ Route::get('/admin/productos', 'ControladorProducto@index');
 Route::post('/admin/producto/nuevo', 'ControladorProducto@guardar');
 Route::get('/admin/productos/CargarGrilla', 'ControladorProducto@cargarGrilla')->name('producto.cargarGrilla');
 Route::get('/admin/producto/eliminar', 'ControladorProducto@eliminar');
+Route::get('/admin/producto/editarPrecio', 'ControladorProducto@editarPrecio')->name('producto.editarPrecio');
+Route::get('/admin/producto/editarPrecioCategoria', 'ControladorProducto@editarPrecioCategoria')->name('producto.editarPrecioCategoria');
 Route::get('/admin/producto/{id}', 'ControladorProducto@editar');
 Route::post('/admin/producto/{id}', 'ControladorProducto@guardar');
+
+Route::post('/subir-precios', [ControladorProducto::class, 'subirPrecios'])->name('subir.precios');
+Route::post('/subir-precios-categoria', 'ControladorProducto@subirPreciosCategoria')->name('subir.productos.categoria');
+
 /* --------------------------------------------- */
 /* CONTROLADOR Pedidos                          */
 /* --------------------------------------------- */

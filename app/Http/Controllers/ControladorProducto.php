@@ -8,6 +8,7 @@ use App\Entidades\Categoria;
 use App\Entidades\Sistema\Patente;
 use App\Entidades\Sistema\Usuario;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 require app_path() . '/start/constants.php';
 
@@ -196,6 +197,70 @@ class ControladorProducto extends Controller
         }
     }
 
+    public function editarPrecio()
+    {
+        $titulo = "Editar Precio";
 
+        $producto = new Producto();
+        $aProductos =$producto->obtenerTodos();
+
+        $categoria = new Categoria();
+        $aCategorias = $categoria->obtenerTodos();
+
+        return view('producto.producto-editarPrecio', compact('aProductos', 'aCategorias', 'titulo', 'producto'));
+        
+    }
+    public function editarPrecioCategoria()
+    {
+        $titulo = "Editar Precio por Categoria";
+
+        $producto = new Producto();
+        $aProductos =$producto->obtenerTodos();
+
+        $categoria = new Categoria();
+        $aCategorias = $categoria->obtenerTodos();
+
+        return view('producto.producto-editarPrecioCategoria', compact('aProductos', 'aCategorias', 'titulo', 'producto'));
+        
+    }
+    
+    public function subirPrecios(Request $request)
+    {   
+        
+                $porcentaje = $request->input('txtPorcentaje');
+
+            // Obtener todos los productos
+            $productos = DB::table('productos')->get();
+
+            // Iterar sobre cada producto y actualizar el precio
+            foreach ($productos as $producto) {
+                $nuevoPrecio = $producto->precio * (1 + ($porcentaje / 100)); // Calcular el nuevo precio
+                DB::table('productos')->where('idproducto', $producto->idproducto)->update(['precio' => $nuevoPrecio]);
+    }
+
+    return redirect()->back()->with('success', 'Los precios se han actualizado correctamente.');
+    }
+
+    public function subirPreciosCategoria(Request $request) 
+    {
+
+            $idCategoria = $request->input('lstCategoria');
+            $porcentaje = $request->input('txtPorcentaje');
+
+            // Validar y asegurarse de que $idCategoria y $porcentaje tengan valores válidos
+
+            // Obtener productos de la categoría seleccionada
+            $productos = Producto::where('fk_idcategoria', $idCategoria)->get();
+
+            // Subir los precios según el porcentaje
+            foreach ($productos as $producto) {
+                $nuevoPrecio = $producto->precio * (1 + ($porcentaje / 100));
+
+                // Especificar la clave primaria al realizar la actualización
+                Producto::where('idproducto', $producto->idproducto)->update(['precio' => $nuevoPrecio]);
+            }
+
+            return redirect()->back()->with('success', 'Los precios de la categoría se han actualizado correctamente.');
+    }
 }
 ?>

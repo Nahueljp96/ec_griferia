@@ -23,6 +23,9 @@ if (isset($msg)) {
     echo '<script>msgShow("' . $msg["MSG"] . '", "' . $msg["ESTADO"] . '")</script>';
 }
 ?>
+<div>
+    <a title="Nuevo" href="{{ route('producto.editarPrecio') }}" class="fa fa-plus-circle" aria-hidden="true"><span>Subir Precios</span></a>
+ </div>
 <table id="grilla" class="display">
     <thead>
         <tr>
